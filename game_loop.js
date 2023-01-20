@@ -5,6 +5,9 @@ const ctx = canvas.getContext("2d");
 const FRAME_LENGTH = 30;
 const actorList = new ActorList();
 //Draw ~ 30 times a second
+
+actorList.addActor(new Player());
+
 let drawIntervalId = window.setInterval(draw, FRAME_LENGTH);
 function draw() {
     // Clear the stage!
