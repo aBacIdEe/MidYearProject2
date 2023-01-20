@@ -11,7 +11,7 @@ class Actor {
     }
 
     getLocation() {
-        return (x, y);
+        return (this.x, this.y);
     }
 
     draw() {
