@@ -4,11 +4,15 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const FRAME_LENGTH = 30;
 const actorList = new ActorList();
+const GRID_WIDTH = 7;
+const GRID_HEIGHT= 8;
 //Draw ~ 30 times a second
-let grid = new Grid(7,8);
+let grid = new Grid(GRID_WIDTH,GRID_HEIGHT);
 // actorList.addActor(new Player());
 const backgroundColor = "#252525";
 let drawIntervalId = window.setInterval(draw, FRAME_LENGTH);
+let player = new Player(3,4);
+actorList.addActor(player);
 function draw() {
     // Clear the stage!
     ctx.canvas.width = window.innerWidth - 20;
@@ -17,10 +21,11 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     // Re-draw all the actors!
+    grid.draw();
     for (const actor of actorList.actors) {
         actor.draw();
     }
-    grid.draw();
+  
     //Update all actors
     for (const actor of actorList.actors) {
         actor.update();
