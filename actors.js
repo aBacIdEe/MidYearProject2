@@ -37,31 +37,7 @@ class Grid {
         // Update properties or other Actors in the actorList.
     }
 }
-// class Actor {
 
-//     constructor(x, y) {
-//         this.x = x;
-//         this.y = y;
-//     }
-
-//     // go places! or something
-//     move() {
-
-//     }
-
-//     getLocation() {
-//         return (this.x, this.y);
-//     }
-
-//     draw() {
-//         var c = document.getElementById("myCanvas");
-//         var ctx = c.getContext("2d");
-//         ctx.beginPath();
-//         ctx.rect(20, 20, 150, 100);
-//         ctx.stroke();
-//     }
-
-// }
 
 
 
