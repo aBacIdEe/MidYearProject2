@@ -187,7 +187,7 @@ class Enemy extends Actor {
         const cameFrom = [];
 
         while (openSet) {
-            
+
         }
     }
 }
@@ -273,7 +273,7 @@ class WalkingEnemy extends Enemy {
 
     move() {
         // if there's a path to follow, follow it. Else: move randomly.
-        if (this.curPath) {
+        if (this.curPath.length != 0) {
 
         } else {
             let options = this.getMoves();
