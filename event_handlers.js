@@ -27,6 +27,9 @@ document.addEventListener("keydown", function (event) {
     if (event.key === downKey || event.key === "ArrowDown") {
         if (player.y<GRID_HEIGHT-1){player.y++;gameUpdateActors();}
     }
+    if (event.key === downKey || event.key === "p") {
+        actorList.addActor(new Wall(2,3));
+    }
     
 });
 document.addEventListener("keyup", function (event) {
