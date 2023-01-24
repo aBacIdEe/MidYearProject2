@@ -92,6 +92,10 @@ class Actor {
     update() {
         // Update properties or other Actors in the actorList.
     }
+
+    getMoves() {
+        
+    }
 }
 
 class Player extends Actor{
@@ -128,8 +132,6 @@ class Player extends Actor{
  
 }
 
-
-
 class Wall extends Actor{
     constructor(x, y) {
         super(x, y);
@@ -162,4 +164,36 @@ class Wall extends Actor{
         
     }
  
+}
+
+class WalkingEnemy extends Actor {
+    constructor(x, y) {
+        super(x, y, name="wall");
+        this.color = "#1451e0";
+        this.r = grid.gridSize/3;
+    }
+
+    draw() {
+        //ctx.fillStyle = "blue";
+         
+            ctx.fillStyle = this.color;
+           
+            ctx.beginPath();
+            //console.log(this.actX,  this.actY, this.r , 0, Math.PI * 2);
+            ctx.arc(this.actX,  this.actY, this.r , 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+        
+        //console.log(this.x,this.y)
+    }
+    update() {
+        
+        this.actX =this.setX(this.x);
+        this.actY =this.setY(this.y);
+        this.r = grid.gridSize/3;
+    }
+    
+    getMoves() {
+        
+    }
 }
