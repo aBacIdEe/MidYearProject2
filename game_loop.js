@@ -4,15 +4,19 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const FRAME_LENGTH = 30;
 const actorList = new ActorList();
-const GRID_WIDTH = 7;
-const GRID_HEIGHT= 8;
-//Draw ~ 30 times a second
-let grid = new Grid(GRID_WIDTH,GRID_HEIGHT);
-// actorList.addActor(new Player());
+const GRID_WIDTH = 12;
+const GRID_HEIGHT= 13;
 const backgroundColor = "#252525";
-let drawIntervalId = window.setInterval(draw, FRAME_LENGTH);
+
+let turnCount = 1;
+
+let grid = new Grid(GRID_WIDTH,GRID_HEIGHT);
 let player = new Player(3,4);
 actorList.addActor(player);
+
+//Draw ~ 30 times a second
+let drawIntervalId = window.setInterval(draw, FRAME_LENGTH);
+
 function draw() {
     // Clear the stage!
     ctx.canvas.width = window.innerWidth - 20;
@@ -26,10 +30,13 @@ function draw() {
         actor.draw();
     }
   
-    //Update all actors
+    // Update all actors
     for (const actor of actorList.actors) {
         actor.update();
     }
+    // Text
+    ctx.font = "48px serif";
+    ctx.fillText(turnCount, 100, 100);
 }
 // Functions to control (pause/continue) the game loop.
 function pauseDrawing() {
@@ -40,6 +47,9 @@ function pauseDrawing() {
 function continueDrawing() {
     if (drawIntervalId === undefined)
         drawIntervalId = window.setInterval(draw, FRAME_LENGTH);
+}
+function gameUpdateActors() {
+    turnCount++;
 }
 // document.querySelector("#pause").addEventListener("click", pauseDrawing);
 // document.querySelector("#continue").addEventListener("click", continueDrawing);

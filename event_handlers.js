@@ -14,19 +14,20 @@ function onStart() {
   
 }
 document.addEventListener("keydown", function (event) {
-   
+
     if (event.key === leftKey || event.key === "ArrowLeft") {
-        if (player.x){player.x--;}
+        if (player.x){player.x--;gameUpdateActors();}
     }
     if (event.key === rightKey || event.key === "ArrowRight") {
-        if (player.x<GRID_WIDTH-1){player.x++;}
+        if (player.x<GRID_WIDTH-1){player.x++;gameUpdateActors();}
     }
     if (event.key === upKey || event.key === "ArrowUp") {
-        if (player.y){player.y--;}
+        if (player.y){player.y--;gameUpdateActors();}
     }
     if (event.key === downKey || event.key === "ArrowDown") {
-        if (player.y<GRID_HEIGHT-1){player.y++;}
+        if (player.y<GRID_HEIGHT-1){player.y++;gameUpdateActors();}
     }
+    
 });
 document.addEventListener("keyup", function (event) {
     

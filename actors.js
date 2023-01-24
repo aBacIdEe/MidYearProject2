@@ -19,10 +19,12 @@ class Grid {
      * Draw the actor on the canvas.
      */
     draw() {
+        this.gridSize = Math.min(canvas.width/this.width/1.5,
+                                 canvas.height/this.height/1.5);
+        this.gridSpace = Math.min(canvas.width/this.width/12,
+                                  canvas.height/this.height/12);
         this.x = canvas.width/2;
         this.y = canvas.height/2;
-        this.gridSize = Math.min(canvas.width/15,canvas.height/15);
-        this.gridSpace = Math.min(canvas.width/100,canvas.height/100);
         // Use ctx to draw. A sample (drawing a small circle):
         //console.log("hi");
         
@@ -32,10 +34,11 @@ class Grid {
         for (var i=0;i<this.height;i++){
             for (var j=0;j<this.width;j++){
                 
-                ctx.fillRect(this.x - this.gridSize*(this.width/2.0 
-                - j) - this.gridSpace*(this.width/2.0 - j +.5),this.y 
-                - this.gridSize*(this.height/2.0 - i) - this.gridSpace*(this.height/2.0 
-                - i +.5),this.gridSize,this.gridSize);
+                ctx.fillRect(this.x - this.gridSize*(this.width/2.0 - j)
+                - this.gridSpace*(this.width/2.0 - j +.5),
+                this.y - this.gridSize*(this.height/2.0 - i) 
+                - this.gridSpace*(this.height/2.0 - i +.5)
+                ,this.gridSize,this.gridSize);
             }
         }
     }
@@ -55,8 +58,8 @@ class Grid {
 class Actor {
 
     setX(n){
-        var width = 7;
-        var height = 8;
+        var width = GRID_WIDTH;
+        var height = GRID_HEIGHT;
         var x = canvas.width/2;
         var y = canvas.height/2;
         var gridSize = Math.min(canvas.width/15,canvas.height/15);
@@ -65,8 +68,8 @@ class Actor {
         return x - gridSize*(width/2.0 - n)+gridSize*.5 - gridSpace*(width/2.0 - n +.5);
     }
     setY(n){
-        var width = 7;
-        var height = 8;
+        var width = GRID_WIDTH;
+        var height = width = GRID_HEIGHT;
         var x = canvas.width/2;
         var y = canvas.height/2;
         var gridSize = Math.min(canvas.width/15,canvas.height/15);
@@ -125,7 +128,7 @@ class Player extends Actor{
         
         this.actX =this.setX(this.x);
         this.actY =this.setY(this.y);
-        this.r = Math.min(canvas.width/15,canvas.height/15)/3;
+        this.r = grid.gridSize/3
     }
  
 }
