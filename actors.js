@@ -58,25 +58,16 @@ class Grid {
 class Actor {
 
     setX(n){
-        var width = GRID_WIDTH;
-        var height = GRID_HEIGHT;
         var x = canvas.width/2;
-        var y = canvas.height/2;
-        var gridSize = Math.min(canvas.width/15,canvas.height/15);
-        var gridSpace = Math.min(canvas.width/100,canvas.height/100);
-       
-        return x - gridSize*(width/2.0 - n)+gridSize*.5 - gridSpace*(width/2.0 - n +.5);
+        var gridSize = grid.gridSize;
+        var gridSpace = grid.gridSpace;
+        return x - gridSize * (GRID_WIDTH/2 - n) + (gridSize/2) - gridSpace * (GRID_WIDTH/2 - n +.5);
     }
     setY(n){
-        var width = GRID_WIDTH;
-        var height = width = GRID_HEIGHT;
-        var x = canvas.width/2;
         var y = canvas.height/2;
-        var gridSize = Math.min(canvas.width/15,canvas.height/15);
-        var gridSpace = Math.min(canvas.width/100,canvas.height/100);
-        return y 
-        - gridSize*(height/2.0 - n)+gridSize*.5 - gridSpace*(height/2.0 
-        - n +.5);
+        var gridSize = grid.gridSize;
+        var gridSpace = grid.gridSpace;
+        return y - gridSize * (GRID_HEIGHT/2 - n) + (gridSize/2) - gridSpace * (GRID_HEIGHT/2 - n +.5);
     }
     constructor(x, y) {
         //set up properties
