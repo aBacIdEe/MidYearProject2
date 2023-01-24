@@ -93,8 +93,8 @@ class Actor {
         // Update properties or other Actors in the actorList.
     }
 
-    getMoves() {
-        
+    move() {
+
     }
 }
 
@@ -177,9 +177,19 @@ class Wall extends Actor{
  
 }
 
-class WalkingEnemy extends Actor {
+class Enemy extends Actor {
     constructor(x, y) {
-        super(x, y, name="wall");
+        super(x, y);
+    }
+
+    getMoves() {
+
+    }
+}
+
+class WalkingEnemy extends Enemy {
+    constructor(x, y) {
+        super(x, y);
         this.color = "#1451e0";
         this.r = grid.gridSize/3;
     }
@@ -205,6 +215,10 @@ class WalkingEnemy extends Actor {
     }
     
     getMoves() {
+
+    }
+
+    move () {
         
     }
 }
