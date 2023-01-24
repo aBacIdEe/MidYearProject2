@@ -99,7 +99,7 @@ class Player extends Actor{
         this.iColor = "#587acc";
         this.xVelocity = 0;
         this.yVelocity = 0;
-        this.r = 100;
+        this.r = grid.gridSize/3;
     }
 
     draw() {
@@ -119,7 +119,7 @@ class Player extends Actor{
         
         this.actX =this.setX(this.x);
         this.actY =this.setY(this.y);
-        this.r = grid.gridSize/3
+        this.r = grid.gridSize/3;
     }
  
 }
