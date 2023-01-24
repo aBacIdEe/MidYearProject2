@@ -16,16 +16,16 @@ function onStart() {
 document.addEventListener("keydown", function (event) {
 
     if (event.key === leftKey || event.key === "ArrowLeft") {
-        if (player.x){player.x--;gameUpdateActors();}
+        player.move(-1,0); 
     }
     if (event.key === rightKey || event.key === "ArrowRight") {
-        if (player.x<GRID_WIDTH-1){player.x++;gameUpdateActors();}
+        player.move(1,0);
     }
     if (event.key === upKey || event.key === "ArrowUp") {
-        if (player.y){player.y--;gameUpdateActors();}
+        player.move(0,-1);
     }
     if (event.key === downKey || event.key === "ArrowDown") {
-        if (player.y<GRID_HEIGHT-1){player.y++;gameUpdateActors();}
+        player.move(0,1);
     }
     if (event.key === downKey || event.key === "p") {
         actorList.addActor(new Wall(2,3));

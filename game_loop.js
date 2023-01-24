@@ -12,7 +12,7 @@ let turnCount = 1;
 
 let grid = new Grid(GRID_WIDTH,GRID_HEIGHT);
 let player = new Player(3,4);
-actorList.addActor(player);
+
 
 //Draw ~ 30 times a second
 let drawIntervalId = window.setInterval(draw, FRAME_LENGTH);
@@ -28,12 +28,16 @@ function draw() {
     grid.draw();
     for (const actor of actorList.actors) {
         actor.draw();
+        
     }
+    player.draw();
   
     // Update all actors
     for (const actor of actorList.actors) {
         actor.update();
+        
     }
+    player.update();
     // Text
     ctx.font = "48px serif";
     ctx.fillText(turnCount, 100, 100);

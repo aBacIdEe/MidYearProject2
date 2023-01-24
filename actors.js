@@ -125,7 +125,18 @@ class Player extends Actor{
         this.actY =this.setY(this.y);
         this.r = grid.gridSize/3;
     }
- 
+    move(dx,dy){
+        var newx = dx+this.x;
+        var newy = dy +this.y;
+        if (newx<0||newx>=GRID_WIDTH||newy<0||newy>=GRID_HEIGHT){
+            return;
+        }
+        if (grid.blocked[newx][newy]==1){
+            return;
+        }
+        this.x = newx;
+        this.y=newy;
+    }
 }
 
 
