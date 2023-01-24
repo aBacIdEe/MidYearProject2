@@ -27,8 +27,11 @@ document.addEventListener("keydown", function (event) {
     if (event.key === downKey || event.key === "ArrowDown") {
         player.move(0,1);
     }
-    if (event.key === downKey || event.key === "p") {
+    if (event.key === "p") {
         actorList.addActor(new Wall(2,3));
+    }
+    if (event.key === "q") {
+        actorList.addActor(new WalkingEnemy());
     }
     
 });

@@ -124,14 +124,14 @@ class Player extends Actor{
         //console.log(this.x,this.y)
     }
     update() {
-        
-        this.actX =this.setX(this.x);
-        this.actY =this.setY(this.y);
+        this.actX = this.setX(this.x);
+        this.actY = this.setY(this.y);
         this.r = grid.gridSize/3;
     }
+    
     move(dx,dy){
-        var newx = dx+this.x;
-        var newy = dy +this.y;
+        var newx = dx + this.x;
+        var newy = dy + this.y;
         if (newx<0||newx>=GRID_WIDTH||newy<0||newy>=GRID_HEIGHT){
             return;
         }
@@ -139,7 +139,7 @@ class Player extends Actor{
             return;
         }
         this.x = newx;
-        this.y=newy;
+        this.y = newy;
     }
 }
 
@@ -188,9 +188,9 @@ class Enemy extends Actor {
 }
 
 class WalkingEnemy extends Enemy {
-    constructor(x, y) {
+    constructor(x=Math.floor(Math.random() * GRID_WIDTH), y=Math.floor(Math.random()*  GRID_WIDTH)) {
         super(x, y);
-        this.color = "#1451e0";
+        this.color = "#a461c0";
         this.r = grid.gridSize/3;
     }
 
@@ -219,6 +219,6 @@ class WalkingEnemy extends Enemy {
     }
 
     move () {
-        
+
     }
 }

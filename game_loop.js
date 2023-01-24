@@ -4,8 +4,8 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const FRAME_LENGTH = 30;
 const actorList = new ActorList();
-const GRID_WIDTH = 100;
-const GRID_HEIGHT= 100;
+const GRID_WIDTH = 20;
+const GRID_HEIGHT= 20;
 const backgroundColor = "#252525";
 
 let turnCount = 1;
