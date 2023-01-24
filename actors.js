@@ -117,7 +117,7 @@ class Player extends Actor{
            
             ctx.beginPath();
             //console.log(this.actX,  this.actY, this.r , 0, Math.PI * 2);
-            ctx.arc(this.actX,  this.actY, this.r , 0, Math.PI * 2);
+            ctx.arc(this.actX,  this.actY, this.r, 0, Math.PI * 2);
             ctx.closePath();
             ctx.fill();
         
@@ -128,11 +128,11 @@ class Player extends Actor{
         this.actY = this.setY(this.y);
         this.r = grid.gridSize/3;
     }
-    
+
     move(dx,dy){
         var newx = dx + this.x;
         var newy = dy + this.y;
-        if (newx<0||newx>=GRID_WIDTH||newy<0||newy>=GRID_HEIGHT){
+        if (newx<0 || newx>=GRID_WIDTH || newy<0 || newy>=GRID_HEIGHT){
             return;
         }
         if (grid.blocked[newx][newy]==1){
@@ -215,10 +215,30 @@ class WalkingEnemy extends Enemy {
     }
     
     getMoves() {
-
+        let validMoves = []; // const means const reference not a const array
+        let possibleMoves = [
+            [1, 0],
+            [0, 1],
+            [-1, 0],
+            [0, -1]
+        ];
+        for (const move of possibleMoves) {
+            let isValid = true;
+            let newX = move[0] + this.x;
+            let newY = move[1] + this.y;
+            if (newX < 0 || newX >= GRID_WIDTH) {isValid = false;}
+            if (newY < 0 || newY >= GRID_HEIGHT) {isValid = false;}
+            if (isValid) {validMoves.push([newX, newY])}
+        }
+        return validMoves;
     }
 
-    move () {
-
+    move() {
+        let options = this.getMoves();
+        let randomIndex = Math.floor(Math.random() * options.length);
+        let newX = options[randomIndex][0];
+        let newY = options[randomIndex][1];
+        this.x = newX;
+        this.y = newY;
     }
 }

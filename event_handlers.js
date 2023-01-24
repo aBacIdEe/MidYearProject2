@@ -31,7 +31,12 @@ document.addEventListener("keydown", function (event) {
         actorList.addActor(new Wall(2,3));
     }
     if (event.key === "q") {
-        actorList.addActor(new WalkingEnemy());
+        let enemy = new WalkingEnemy();
+        actorList.addActor(enemy);
+        enemyList.addActor(enemy)
+    }
+    if (event.key === "j") {
+        gameUpdateNonPlayers();
     }
     
 });

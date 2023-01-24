@@ -4,6 +4,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const FRAME_LENGTH = 30;
 const actorList = new ActorList();
+const enemyList = new ActorList();
 const GRID_WIDTH = 20;
 const GRID_HEIGHT= 20;
 const backgroundColor = "#252525";
@@ -52,8 +53,11 @@ function continueDrawing() {
     if (drawIntervalId === undefined)
         drawIntervalId = window.setInterval(draw, FRAME_LENGTH);
 }
-function gameUpdateActors() {
+function gameUpdateNonPlayers() {
     turnCount++;
+    for (const enemy of enemyList.actors) {
+        enemy.move();
+    };
 }
 // document.querySelector("#pause").addEventListener("click", pauseDrawing);
 // document.querySelector("#continue").addEventListener("click", continueDrawing);
