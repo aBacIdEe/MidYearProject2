@@ -8,10 +8,10 @@ class Grid {
         this.y = canvas.height/2;
         this.gridSize = Math.min(canvas.width/20,canvas.height/20);
         this.gridSpace = Math.min(canvas.width/200,canvas.height/200);
-        this.stuff = new Array(width);
+        this.blocked = new Array(width);
       
         for (var i = 0; i < this.width; i++) {
-            this.stuff[i] = new Array(this.height);
+            this.blocked[i] = new Array(this.height);
         }
 
     }
@@ -47,7 +47,11 @@ class Grid {
      */
    
     update() {
-        
+        for (var i = 0; i < this.width; i++) {
+            for (var j=0; i < this.height; j++) {
+                this.blocked[i][j] = 0;
+            }
+        }
     }
 }
 
@@ -120,6 +124,42 @@ class Player extends Actor{
         this.actX =this.setX(this.x);
         this.actY =this.setY(this.y);
         this.r = grid.gridSize/3;
+    }
+ 
+}
+
+
+
+class Wall extends Actor{
+    constructor(x, y) {
+        super(x, y);
+        this.iFrames = 0;
+        this.iTime = 60;
+        this.color = "#1451e0";
+        this.r = grid.gridSize/3;
+        
+    }
+
+    draw() {
+        //ctx.fillStyle = "blue";
+         
+            ctx.fillStyle = this.color;
+           
+            ctx.beginPath();
+            //console.log(this.actX,  this.actY, this.r , 0, Math.PI * 2);
+            ctx.arc(this.actX,  this.actY, this.r , 0, Math.PI * 2);
+            ctx.fillRect(this.actX-.5*grid.gridSize,this.actY-.5*grid.gridSize,grid.gridSize,grid.gridSize)
+            ctx.closePath();
+            ctx.fill();
+        
+        //console.log(this.x,this.y)
+    }
+    update() {
+        this.actX =this.setX(this.x);
+        this.actY =this.setY(this.y);
+        this.r = grid.gridSize/3;
+        grid.blocked[this.x][this.y]=1;
+        
     }
  
 }
