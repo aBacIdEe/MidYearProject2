@@ -58,15 +58,15 @@ class Grid {
 class Actor {
 
     setX(n){
-        var x = canvas.width/2;
-        var gridSize = grid.gridSize;
-        var gridSpace = grid.gridSpace;
+        let x = canvas.width/2;
+        let gridSize = grid.gridSize;
+        let gridSpace = grid.gridSpace;
         return x - gridSize * (GRID_WIDTH/2 - n) + (gridSize/2) - gridSpace * (GRID_WIDTH/2 - n +.5);
     }
     setY(n){
-        var y = canvas.height/2;
-        var gridSize = grid.gridSize;
-        var gridSpace = grid.gridSpace;
+        let y = canvas.height/2;
+        let gridSize = grid.gridSize;
+        let gridSpace = grid.gridSpace;
         return y - gridSize * (GRID_HEIGHT/2 - n) + (gridSize/2) - gridSpace * (GRID_HEIGHT/2 - n +.5);
     }
     constructor(x, y) {
