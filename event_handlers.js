@@ -38,6 +38,10 @@ document.addEventListener("keydown", function (event) {
     if (event.key === "j") {
         gameUpdateNonPlayers();
     }
+    if (event.key === "g") {
+        let goal = new Goal();
+        actorList.addActor(goal);
+    }
     
 });
 document.addEventListener("keyup", function (event) {

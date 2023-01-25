@@ -191,8 +191,40 @@ class Enemy extends Actor {
         super(x, y);
     }
 
-    getMoves() {
+    A_star(start, goal, h) {
+        const openSet = [];
+        const cameFrom = [];
 
+        while (openSet) {
+
+        }
+    }
+}
+
+class Goal extends Actor {
+    constructor(x=Math.floor(Math.random() * GRID_WIDTH), y=Math.floor(Math.random()*  GRID_WIDTH)) {
+        super(x, y);
+        this.color = "#888888";
+        console.log(x, y);
+    }
+
+    draw() {
+        //ctx.fillStyle = "blue";
+        ctx.fillStyle = this.color;
+       
+        ctx.beginPath();
+        //console.log(this.actX,  this.actY, this.r , 0, Math.PI * 2);
+        ctx.arc(this.actX,  this.actY, this.r, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+        
+        //console.log(this.x,this.y)
+    }
+
+    update() {
+        this.actX = this.setX(this.x);
+        this.actY = this.setY(this.y);
+        this.r = grid.gridSize/3;
     }
 }
 
@@ -201,6 +233,7 @@ class WalkingEnemy extends Enemy {
         super(x, y);
         this.color = "#a461c0";
         this.r = grid.gridSize/3;
+        this.curPath = [];
     }
 
     draw() {
@@ -242,12 +275,22 @@ class WalkingEnemy extends Enemy {
         return validMoves;
     }
 
+    // Gets path to nearest goal node for 3 turns.
+    getPath(turns) {
+        
+    }
+
     move() {
-        let options = this.getMoves();
-        let randomIndex = Math.floor(Math.random() * options.length);
-        let newX = options[randomIndex][0];
-        let newY = options[randomIndex][1];
-        this.x = newX;
-        this.y = newY;
+        // if there's a path to follow, follow it. Else: move randomly.
+        if (this.curPath.length != 0) {
+
+        } else {
+            let options = this.getMoves();
+            let randomIndex = Math.floor(Math.random() * options.length);
+            let newX = options[randomIndex][0];
+            let newY = options[randomIndex][1];
+            this.x = newX;
+            this.y = newY;
+        }
     }
 }
