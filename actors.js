@@ -1,4 +1,11 @@
 
+function drawImageCenter(nam, x,y){
+    ctx.drawImage(document.getElementById(nam),x-grid.gridSize/2,y-grid.gridSize/2,grid.gridSize,grid.gridSize);
+}
+function drawImageCorner(nam, x,y){
+    ctx.drawImage(document.getElementById(nam),x,y,grid.gridSize,grid.gridSize);
+
+}
 class Grid {
     constructor(width, height) {
         //set up properties
@@ -108,6 +115,7 @@ class Player extends Actor{
         this.xVelocity = 0;
         this.yVelocity = 0;
         this.r = grid.gridSize/3;
+        this.image = "penny";
     }
 
     draw() {
@@ -120,6 +128,7 @@ class Player extends Actor{
             ctx.arc(this.actX,  this.actY, this.r, 0, Math.PI * 2);
             ctx.closePath();
             ctx.fill();
+            drawImageCenter(this.image,this.actX,this.actY);
         
         //console.log(this.x,this.y)
     }
