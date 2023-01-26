@@ -29,9 +29,10 @@ document.addEventListener("keydown", function (event) {
     }
     if (event.key === "p") {
         actorList.addActor(new Wall(2,3));
-       
+        actorList.addActor(new Wall(2,0));
         actorList.addActor(new Wall(3,5));
         actorList.addActor(new Wall(4,2));
+        actorList.addActor(new Wall(2,4));
         actorList.addActor(new Wall(5,2));
         actorList.addActor(new Wall(5,5));
         actorList.addActor(new Wall(6,5));
@@ -39,6 +40,8 @@ document.addEventListener("keydown", function (event) {
         actorList.addActor(new Wall(3,1));
         actorList.addActor(new Wall(4,5));
         actorList.addActor(new Wall(0,6));
+        actorList.addActor(new Wall(1,6));
+       
         actorList.addActor(new Wall(7,6));
         let enemy = new WalkingEnemy(3,4);
         actorList.addActor(enemy);
