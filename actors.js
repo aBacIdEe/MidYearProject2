@@ -115,7 +115,8 @@ class Player extends Actor{
         this.xVelocity = 0;
         this.yVelocity = 0;
         this.r = grid.gridSize/3;
-        this.image = "penny";
+        this.image = new Image();
+        this.image.src = "images/penny.jpg";
     }
 
     draw() {
@@ -128,7 +129,8 @@ class Player extends Actor{
             ctx.arc(this.actX,  this.actY, this.r, 0, Math.PI * 2);
             ctx.closePath();
             ctx.fill();
-            drawImageCenter(this.image,this.actX,this.actY);
+            //console.log(typeof(this.image));
+            ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
         
         //console.log(this.x,this.y)
     }
@@ -159,7 +161,8 @@ class Wall extends Actor{
         this.iTime = 60;
         this.color = "#1451e0";
         this.r = grid.gridSize/3;
-        this.image = "wall";
+        this.image = new Image();
+        this.image.src = "images/wall.jpg";
     }
 
     draw() {
@@ -173,7 +176,7 @@ class Wall extends Actor{
             ctx.fillRect(this.actX-.5*grid.gridSize,this.actY-.5*grid.gridSize,grid.gridSize,grid.gridSize)
             ctx.closePath();
             ctx.fill();
-            drawImageCenter(this.image,this.actX,this.actY);
+            ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
         
         //console.log(this.x,this.y)
     }
