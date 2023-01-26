@@ -264,6 +264,7 @@ class WalkingEnemy extends Enemy {
         // things in open list will be in format f, g, h, x, y
         console.log("hi:",start);
         console.log("hi:",goal);
+        this.curPath = []
         var openList   = [];
         var parent = {start:null}
         var costTo = {start:0}
@@ -370,8 +371,17 @@ class WalkingEnemy extends Enemy {
         if (this.curPath.length != 0) {
             var nextMove = this.curPath.shift();
             console.log("hiiiiid");
+            for (const move of this.getMoves()){
+                if ([this.x+nextMove[0],this.y+nextMove[1]]==move){
+                    this.x += nextMove[0];
+                    this.y += nextMove[1];
+                    break;
+                }
+                
+            }
             this.x += nextMove[0];
             this.y += nextMove[1];
+            
         } else {
             return;
             let options = this.getMoves();
