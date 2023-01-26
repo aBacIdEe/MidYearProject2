@@ -56,7 +56,9 @@ function continueDrawing() {
 function gameUpdateNonPlayers() {
     turnCount++;
     for (const enemy of enemyList.actors) {
+        
         enemy.move();
+        
     };
 }
 // document.querySelector("#pause").addEventListener("click", pauseDrawing);

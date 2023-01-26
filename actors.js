@@ -159,7 +159,7 @@ class Wall extends Actor{
         this.iTime = 60;
         this.color = "#1451e0";
         this.r = grid.gridSize/3;
-        
+        this.image = "wall";
     }
 
     draw() {
@@ -173,6 +173,7 @@ class Wall extends Actor{
             ctx.fillRect(this.actX-.5*grid.gridSize,this.actY-.5*grid.gridSize,grid.gridSize,grid.gridSize)
             ctx.closePath();
             ctx.fill();
+            drawImageCenter(this.image,this.actX,this.actY);
         
         //console.log(this.x,this.y)
     }
@@ -255,6 +256,86 @@ class WalkingEnemy extends Enemy {
         this.actY =this.setY(this.y);
         this.r = grid.gridSize/3;
     }
+    // start and goal will be in format of (x,y)
+    A_star(start, goal) {
+        // things in open list will be in format f, g, h, x, y
+        console.log("hi:",start);
+        console.log("hi:",goal);
+        var openList   = [];
+        var parent = {start:null}
+        var costTo = {start:0}
+        var x = start[0]
+        var y = start[1]
+        var g = 0
+        var visited = new Array(GRID_WIDTH);
+      
+        for (var i = 0; i < GRID_WIDTH; i++) {
+            visited[i] = new Array(GRID_HEIGHT);
+            visited[i].fill(0);
+        }
+        var h = Math.abs(goal[0]-x)+Math.abs(goal[1]-y);
+        let dirs = [
+            [1, 0],
+            [0, 1],
+            [-1, 0],
+            [0, -1]
+        ];
+        openList.push([g+h,g,h,x,y]);
+        //console.log([g+h,g,h,x,y]);
+        var count = 1;
+        while(openList.length > 0) {
+            //console.log(count,"uewfoj");
+            openList.sort(function(x,y){return x[0]-y[0]});
+            
+            var cur = openList.shift();
+            // console.log(cur)
+            visited[cur[3]][cur[4]] = 1;
+            var isGood = 0;
+            for (var i =0;i<4;i++){
+                x = cur[3]+dirs[i][0];
+                y = cur[4]+dirs[i][1];
+                if ([x,y]==[goal[0],goal[1]]){
+                    parent[[x,y]] = [cur[3],cur[4]];
+                    console.log([cur[3],cur[4]]);
+                    isGood=1;
+                    break;
+                }
+                if (x<0||y<0||x>=GRID_WIDTH||y>=GRID_HEIGHT){
+                    continue;
+                }
+                //console.log(x,y);
+               // console.log(grid.blocked[x][y])
+                if (grid.blocked[x][y]!=1 && (visited[x][y]==0||cur[1]+1<costTo[[x,y]])){
+                    
+                   
+                    costTo[[x,y]]=cur[1]+1;
+                    g = cur[1]+1;
+                    h = Math.abs(goal[0]-x)+Math.abs(goal[1]-y);
+                    openList.push([g+h,g,h,x,y]);
+                    parent[[x,y]] = [cur[3],cur[4]];
+                    
+                }
+            }
+            if (isGood==1){
+                break;
+            }
+           
+        }
+        let spot = [goal[0],goal[1]];
+        let retPath = [];
+        while (spot[0]!=start[0]||spot[1]!=start[1]){
+            console.log(retPath);
+            var par = parent[spot];
+            retPath.unshift([spot[0]-par[0],spot[1]-par[1]]);
+            this.curPath.unshift([spot[0]-par[0],spot[1]-par[1]]);
+            spot = par;
+            
+        }
+        // No result was found -- empty array signifies failure to find path
+        console.log(retPath);
+        
+        return retPath;
+    }
     
     getMoves() {
         let validMoves = []; // const means const reference not a const array
@@ -282,9 +363,14 @@ class WalkingEnemy extends Enemy {
 
     move() {
         // if there's a path to follow, follow it. Else: move randomly.
+        
         if (this.curPath.length != 0) {
-
+            var nextMove = this.curPath.shift();
+            console.log("hiiiiid");
+            this.x += nextMove[0];
+            this.y += nextMove[1];
         } else {
+            return;
             let options = this.getMoves();
             let randomIndex = Math.floor(Math.random() * options.length);
             let newX = options[randomIndex][0];
