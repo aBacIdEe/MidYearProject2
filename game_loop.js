@@ -5,8 +5,8 @@ const ctx = canvas.getContext("2d");
 const FRAME_LENGTH = 30;
 const actorList = new ActorList();
 const enemyList = new ActorList();
-const GRID_WIDTH = 10;
-const GRID_HEIGHT = 10;
+var GRID_WIDTH = 10;
+var GRID_HEIGHT= 10;
 const backgroundColor = "#252525";
 const rooms = new Array(10);
 Promise.all([
@@ -46,13 +46,23 @@ function draw() {
         actor.draw();
 
     }
+    for (const actor of enemyList.actors) {
+        actor.draw();
+        
+    }
     player.draw();
 
     // Update all actors
+   grid.update()
     for (const actor of actorList.actors) {
         actor.update();
 
     }
+    for (const actor of enemyList.actors) {
+        actor.update();
+        
+    }
+    
     player.update();
     // Text
     ctx.font = "48px serif";

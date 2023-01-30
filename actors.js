@@ -54,11 +54,14 @@ class Grid {
      */
    
     update() {
+        this.width = GRID_WIDTH;
+        this.height = GRID_HEIGHT
+        this.blocked = new Array(this.width);
+      
         for (var i = 0; i < this.width; i++) {
-            for (var j=0; i < this.height; j++) {
-                this.blocked[i][j] = 0;
-            }
+            this.blocked[i] = new Array(this.height);
         }
+        
     }
 
     loadRoomFromFile() {
