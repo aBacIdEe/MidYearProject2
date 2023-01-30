@@ -8,11 +8,26 @@ const enemyList = new ActorList();
 var GRID_WIDTH = 10;
 var GRID_HEIGHT= 10;
 const backgroundColor = "#252525";
+const rooms = new Array(10);
+Promise.all([
+    fetch('rooms/room1.txt').then(x => x.text()),
+    fetch('rooms/room2.txt').then(x => x.text()),
+    fetch('rooms/room3.txt').then(x => x.text()),
+    fetch('rooms/room4.txt').then(x => x.text()),
+    fetch('rooms/room5.txt').then(x => x.text()),
+]).then(([r1, r2, r3, r4, r5]) => {
+    rooms.push(r1);
+    rooms.push(r2);
+    rooms.push(r3);
+    rooms.push(r4);
+    rooms.push(r5);
+});
+console.log(rooms);
 
 let turnCount = 1;
-
-let grid = new Grid(GRID_WIDTH,GRID_HEIGHT);
-let player = new Player(3,4);
+let screen
+let grid = new Grid(GRID_WIDTH, GRID_HEIGHT);
+let player = new Player(3, 4);
 
 
 //Draw ~ 30 times a second
@@ -29,19 +44,19 @@ function draw() {
     grid.draw();
     for (const actor of actorList.actors) {
         actor.draw();
-        
+
     }
     for (const actor of enemyList.actors) {
         actor.draw();
         
     }
     player.draw();
-  
+
     // Update all actors
    grid.update()
     for (const actor of actorList.actors) {
         actor.update();
-        
+
     }
     for (const actor of enemyList.actors) {
         actor.update();
@@ -66,9 +81,9 @@ function continueDrawing() {
 function gameUpdateNonPlayers() {
     turnCount++;
     for (const enemy of enemyList.actors) {
-        
+
         enemy.move();
-        
+
     };
 }
 // document.querySelector("#pause").addEventListener("click", pauseDrawing);
