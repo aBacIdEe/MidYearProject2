@@ -60,6 +60,10 @@ class Grid {
             }
         }
     }
+
+    loadRoomFromFile() {
+        
+    }
 }
 
 
@@ -154,7 +158,7 @@ class Player extends Actor{
     }
 }
 
-class Wall extends Actor{
+class Wall extends Enemy{
     constructor(x, y) {
         super(x, y);
         this.iFrames = 0;
@@ -206,10 +210,11 @@ class Enemy extends Actor {
 }
 
 class Goal extends Actor {
-    constructor(x=Math.floor(Math.random() * GRID_WIDTH), y=Math.floor(Math.random()*  GRID_WIDTH)) {
+    constructor(x=Math.floor(Math.random() * GRID_WIDTH), y=Math.floor(Math.random()*  GRID_WIDTH), changeRoom=1) {
         super(x, y);
         this.color = "#888888";
         console.log(x, y);
+        this.changeRoom = changeRoom;
     }
 
     draw() {
@@ -229,6 +234,9 @@ class Goal extends Actor {
         this.actX = this.setX(this.x);
         this.actY = this.setY(this.y);
         this.r = grid.gridSize/3;
+        if (player.x == this.x && player.y == this.y) {
+            loadRoom(this.changeRoom);
+        }
     }
 }
 
