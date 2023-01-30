@@ -6,14 +6,37 @@ const rightKey = "d";
 // [x,y,]
 const rooms = [
     
-    [4,4,7,7,[
-    [0,0,0],
-    [1,1,0],
-    [0,2,0],
-    [1,3,0],
-    [0,4,0],[1,5,0],[6,6,1]]
-
-]]
+    [4,4,7,7,
+        [
+        [0,0,0],
+        [1,1,0],
+        [0,2,0],
+        [1,3,0],
+        [0,4,0],
+        [1,5,0],
+        [6,6,1,1]]
+    ], 
+    [4, 4, 8, 8,
+        [
+        [0,0,0],
+        [1,1,0],
+        [0,2,0],
+        [1,3,0],
+        [0,4,0],
+        [1,5,0],
+        [6,6,1,2]]
+    ], 
+    [4, 4, 9, 9,
+        [
+        [0,0,0],
+        [1,1,0],
+        [0,2,0],
+        [1,3,0],
+        [0,4,0],
+        [1,5,0],
+        [6,6,1,0]]
+    ]
+]
 
 window.addEventListener("load", function () {
     //Handle when the whole page finishes loading
@@ -35,8 +58,8 @@ function createEnemy(x,y,type){
     }
     if (type==1){
         console.log(type,x,y);
-        wall = new Goal(x,y);
-        enemyList.addActor(wall)
+        goal = new Goal(x,y);
+        enemyList.addActor(goal)
     }
 }
 
@@ -48,8 +71,12 @@ function loadRoom(room) {
     GRID_HEIGHT = rooms[room][3];
     enemyList.removeAllActors();
     for (const thing of rooms[room][4]){
-        
-        createEnemy(thing[0],thing[1],thing[2])
+        if (thing.length === 4) { // it means it's a goal and has a specified destination
+            goal = new Goal(thing[0], thing[1], thing[3]);
+            enemyList.addActor(goal);
+        } else {
+            createEnemy(thing[0], thing[1], thing[2])
+        }
     }
     
 }

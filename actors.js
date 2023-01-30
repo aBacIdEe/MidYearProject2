@@ -64,9 +64,6 @@ class Grid {
         
     }
 
-    loadRoomFromFile() {
-        
-    }
 }
 
 
