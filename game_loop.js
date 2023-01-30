@@ -1,4 +1,4 @@
-"use strict";
+
 // Main "boilerplate" code for a game loop. Unlikely to need to change this.
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -8,21 +8,21 @@ const enemyList = new ActorList();
 var GRID_WIDTH = 10;
 var GRID_HEIGHT= 10;
 const backgroundColor = "#252525";
-const rooms = new Array(10);
-Promise.all([
-    fetch('rooms/room1.txt').then(x => x.text()),
-    fetch('rooms/room2.txt').then(x => x.text()),
-    fetch('rooms/room3.txt').then(x => x.text()),
-    fetch('rooms/room4.txt').then(x => x.text()),
-    fetch('rooms/room5.txt').then(x => x.text()),
-]).then(([r1, r2, r3, r4, r5]) => {
-    rooms.push(r1);
-    rooms.push(r2);
-    rooms.push(r3);
-    rooms.push(r4);
-    rooms.push(r5);
-});
-console.log(rooms);
+// let rooms = new Array(10);
+// Promise.all([
+//     fetch('rooms/room1.txt').then(x => x.text()),
+//     fetch('rooms/room2.txt').then(x => x.text()),
+//     fetch('rooms/room3.txt').then(x => x.text()),
+//     fetch('rooms/room4.txt').then(x => x.text()),
+//     fetch('rooms/room5.txt').then(x => x.text()),
+// ]).then(([r1, r2, r3, r4, r5]) => {
+//     rooms.push(r1);
+//     rooms.push(r2);
+//     rooms.push(r3);
+//     rooms.push(r4);
+//     rooms.push(r5);
+// });
+// console.log(rooms);
 
 let turnCount = 1;
 let screen

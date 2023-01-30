@@ -161,9 +161,9 @@ class Player extends Actor{
     }
 }
 
-class Wall extends Enemy{
+class Wall extends Actor{
     constructor(x, y) {
-        super(x, y);
+        super(x,y)
         this.iFrames = 0;
         this.iTime = 60;
         this.color = "#1451e0";
@@ -213,7 +213,7 @@ class Enemy extends Actor {
 }
 
 class Goal extends Actor {
-    constructor(x=Math.floor(Math.random() * GRID_WIDTH), y=Math.floor(Math.random()*  GRID_WIDTH), changeRoom=1) {
+    constructor(x=Math.floor(Math.random() * GRID_WIDTH), y=Math.floor(Math.random()*  GRID_WIDTH), changeRoom=0) {
         super(x, y);
         this.color = "#888888";
         console.log(x, y);
