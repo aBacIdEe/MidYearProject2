@@ -213,6 +213,7 @@ class Goal extends Actor {
         super(x, y);
         this.color = "#888888";
         console.log(x, y);
+        this.toRoom = 0
     }
 
     draw() {
@@ -232,6 +233,9 @@ class Goal extends Actor {
         this.actX = this.setX(this.x);
         this.actY = this.setY(this.y);
         this.r = grid.gridSize/3;
+        if (player.x==this.x && player.y == this.y){
+            loadRoom(this.toRoom);
+        }
     }
 }
 

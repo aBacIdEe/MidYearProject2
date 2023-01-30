@@ -11,7 +11,7 @@ const rooms = [
     [1,1,0],
     [0,2,0],
     [1,3,0],
-    [0,4,0],[1,5,0]]
+    [0,4,0],[1,5,0],[6,6,1]]
 
 ]]
 
@@ -31,6 +31,11 @@ function createEnemy(x,y,type){
     if (type==0){
         console.log(type,x,y);
         wall = new Wall(x,y);
+        enemyList.addActor(wall)
+    }
+    if (type==1){
+        console.log(type,x,y);
+        wall = new Goal(x,y);
         enemyList.addActor(wall)
     }
 }
