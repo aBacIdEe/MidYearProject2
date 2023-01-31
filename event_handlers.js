@@ -57,7 +57,7 @@ function createEnemy(x,y,type){
     console.log(type);
     if (type==0){
         console.log(type,x,y);
-        wall = new Wall(x,y);
+        wall = new WalkingWall(x,y);
         enemyList.addActor(wall)
     }
     if (type==1){
