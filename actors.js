@@ -20,6 +20,24 @@ class Grid {
         for (var i = 0; i < this.width; i++) {
             this.blocked[i] = new Array(this.height);
         }
+        this.centerImage = new Image();
+        this.rightEdge = new Image();
+        this.leftEdge = new Image();
+        this.bottomEdge = new Image();
+        this.topEdge = new Image();
+        this.bottomLeftCorner = new Image();
+        this.bottomRightCorner = new Image();
+        this.topRightCorner = new Image();
+        this.topLeftCorner = new Image();
+        this.centerImage.src = "images/tileCenter.jpg";
+        this.rightEdge.src = "images/rightEdge.jpg";
+        this.leftEdge.src = "images/leftEdge.jpg";
+        this.bottomEdge.src = "images/bottomEdge.jpg";
+        this.topEdge.src = "images/topEdge.jpg";
+        this.bottomLeftCorner.src = "images/bottomLeftCorner.jpg";
+        this.bottomRightCorner.src = "images/bottomRightCorner.jpg";
+        this.topRightCorner.src = "images/topRightCorner.jpg";
+        this.topLeftCorner.src = "images/topLeftCorner.jpg";
 
     }
     /**
@@ -28,8 +46,9 @@ class Grid {
     draw() {
         this.gridSize = Math.min(canvas.width/this.width/1.5,
                                  canvas.height/this.height/1.5);
-        this.gridSpace = Math.min(canvas.width/this.width/12,
-                                  canvas.height/this.height/12);
+        this.gridSpace = 0;
+        // this.gridSpace = Math.min(canvas.width/this.width/20,
+        //                           canvas.height/this.height/20);
         this.x = canvas.width/2;
         this.y = canvas.height/2;
         // Use ctx to draw. A sample (drawing a small circle):
@@ -40,12 +59,35 @@ class Grid {
 
         for (var i=0;i<this.height;i++){
             for (var j=0;j<this.width;j++){
+                // detect four side surround, then three, then two, the one, then it's blank
+                if (i == 0 && j == 0) {
+                    var toBeDrawn = this.topLeftCorner;
+                } else if (i == 0 && j == this.width - 1) {
+                    var toBeDrawn = this.topRightCorner;
+                } else if (i == 0) {
+                    var toBeDrawn = this.topEdge;
+                } else if (i == this.height - 1) {
+                    var toBeDrawn = this.bottomEdge;
+                } else if (j == 0) {
+                    var toBeDrawn = this.leftEdge;
+                } else if (j == this.width - 1) {
+                    var toBeDrawn = this.rightEdge;
+                } else {
+                    var toBeDrawn = this.centerImage;
+                }
                 
-                ctx.fillRect(this.x - this.gridSize*(this.width/2.0 - j)
+                // ctx.fillRect(this.x - this.gridSize*(this.width/2.0 - j)
+                // - this.gridSpace*(this.width/2.0 - j +.5),
+                // this.y - this.gridSize*(this.height/2.0 - i) 
+                // - this.gridSpace*(this.height/2.0 - i +.5)
+                // ,this.gridSize,this.gridSize);
+                // console.log(this.centerImage);
+                ctx.drawImage(toBeDrawn, this.x - this.gridSize*(this.width/2.0 - j)
                 - this.gridSpace*(this.width/2.0 - j +.5),
                 this.y - this.gridSize*(this.height/2.0 - i) 
                 - this.gridSpace*(this.height/2.0 - i +.5)
                 ,this.gridSize,this.gridSize);
+                // ctx.drawImage(this.centerImage, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
             }
         }
     }
