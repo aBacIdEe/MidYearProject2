@@ -25,35 +25,39 @@ class Grid {
         }
         // ABCDE for numbers 01234, Fromat being AA, AB, etc, corners then edges
         this.AA = new Image(); // blank
-        this.BA = new Image(); // no edges
-        this.CA = new Image();
-        this.CAdiag = new Image();
-        this.DA = new Image();
-        this.EA = new Image();
-        this.AB = new Image(); // one edge
-        this.BB = new Image();
-        this.CB = new Image();
-        this.AC = new Image(); // two edges
-        this.ACpara = new Image();
-        this.BC = new Image();
-        this.AD = new Image(); // three edges
-        this.AE = new Image(); // four edges
+        // this.BA = new Image(); // no edges
+        // this.CA = new Image();
+        // this.CAdiag = new Image();
+        // this.DA = new Image();
+        // this.EA = new Image();
+        // this.AB = new Image(); // one edge
+        // this.BB = new Image();
+        // this.CB = new Image();
+        // this.AC = new Image(); // two edges
+        // this.ACpara = new Image();
+        // this.BC = new Image();
+        // this.AD = new Image(); // three edges
+        // this.AE = new Image(); // four edges
 
         this.AA.src = "images/AA.jpg";
-        this.BA.src = "images/BA.jpg";
-        this.CA.src = "images/CA.jpg";
-        this.CAdiag.src = "images/CAdiag.jpg";
-        this.DA.src = "images/DA.jpg";
-        this.EA.src = "images/EA.jpg";
-        this.AB.src = "images/AB.jpg";
-        this.BB.src = "images/BB.jpg";
-        this.CB.src = "images/CB.jpg";
-        this.AC.src = "images/AC.jpg";
-        this.ACpara.src = "images/ACpara.jpg";
-        this.BC.src = "images/BC.jpg";
-        this.AD.src = "images/AD.jpg";
-        this.AE.src = "images/AE.jpg";
+        // this.BA.src = "images/BA.jpg";
+        // this.CA.src = "images/CA.jpg";
+        // this.CAdiag.src = "images/CAdiag.jpg";
+        // this.DA.src = "images/DA.jpg";
+        // this.EA.src = "images/EA.jpg";
+        // this.AB.src = "images/AB.jpg";
+        // this.BB.src = "images/BB.jpg";
+        // this.CB.src = "images/CB.jpg";
+        // this.AC.src = "images/AC.jpg";
+        // this.ACpara.src = "images/ACpara.jpg";
+        // this.BC.src = "images/BC.jpg";
+        // this.AD.src = "images/AD.jpg";
+        // this.AE.src = "images/AE.jpg";
 
+        // this.debug = new Image();
+        // this.debug.src = "images/debug.jpg";
+        this.border = new Image();
+        this.border.src = "images/border.jpg";
     }
     /**
      * Draw the actor on the canvas.
@@ -71,9 +75,10 @@ class Grid {
         
       
         ctx.fillStyle = "#e3c47d";
-
-        for (var i=1;i<this.height - 1;i++){
-            for (var j=1;j<this.width - 1;j++){
+        // i is x axis; j is y axis,  bot left is 1,1
+        for (var i=1;i<this.width - 1;i++){
+            for (var j=1;j<this.height - 1;j++){
+                //i = this.width - 2 - i;
                 // 1 Corner, 2 Corner, 2 Diag Corner, 3 Corner, 4 Corner, 1 Edge, 1 Edge 1 corner, 1 Edge 2 Corner, 2 Edge, 2 Edge 1 corner, 2 Edge Parallel, 3 Edge, 4 Edge
                 // detect four side surround, then three, then two, the one, then it's blank
                 // if (i == 0 && j == 0) {
@@ -91,45 +96,75 @@ class Grid {
                 // } else {
                 //     var toBeDrawn = this.centerImage;
                 // }
+                // let toBeDrawn = this.AA;
+                // let nor = 0;
+                // let sou = 0;
+                // let wes = 0;
+                // let eas = 0;
+                // if (this.blocked[i - 1][j] == 1) {
+                //     nor = 1;
+                // }
+                // if (this.blocked[i + 1][j] == 1) {
+                //     sou = 1;
+                // }
+                // if (this.blocked[i][j + 1] == 1) {
+                //     wes = 1;
+                // }
+                // if (this.blocked[i][j - 1] == 1) {
+                //     eas = 1;
+                // }
+                // let angleInRadians = Math.PI / 2; // 90 degrees CC
+                // let edgeSum = nor + sou + wes + eas;
+                // if (edgeSum == 0) {
+                //     toBeDrawn = this.AA;
+                // } else if (edgeSum == 1) {
+                //     toBeDrawn = this.AB;
+                //     if (nor == 1) {
+                //         angleInRadians = 3 * Math.PI / 2;
+                //     } else if (wes == 1) {
+                //         angleInRadians = 0;
+                //     } else if (sou == 1) {
+                //         angleInRadians = Math.PI / 2;
+                //     } else if (eas == 1) {
+                //         angleInRadians = Math.PI;
+                //     }
+                // } else if (edgeSum == 2) {
+                //     toBeDrawn = this.AC;
+                //     if (nor == 1 && wes == 1) {
+                //         angleInRadians = 3 * Math.PI / 2;
+                //     } else if (wes == 1 && sou == 1) {
+                //         angleInRadians = 0;
+                //     } else if (sou == 1 && eas == 1) {
+                //         angleInRadians = Math.PI / 2;
+                //     } else if (eas == 1 && nor == 1) {
+                //         angleInRadians = Math.PI;
+                //     }
+                // } else if (edgeSum == 3) {
+                //     toBeDrawn = this.AD;
+                // } else if (edgeSum == 4) {
+                //     toBeDrawn = this.AE;
+                // }
+                // if (i == 9 && j == 4) {
+                //     console.log(i, j, edgeSum);
+                //     console.log(nor, wes, sou, eas);
+                // }
+                // console.log(edgeSum);
+                
                 let toBeDrawn = this.AA;
-                let nor = 0;
-                let sou = 0;
-                let wes = 0;
-                let eas = 0;
-                if (this.blocked[i + 1][j] > 0) {
-                    eas = 1;
-                }
-                if (this.blocked[i - 1][j] > 0) {
-                    wes = 1;
-                }
-                if (this.blocked[i + 1][j] > 0) {
-                    sou = 1;
-                }
-                if (this.blocked[i - 1][j] > 0) {
-                    nor = 1;
-                }
-                let edgeSum = nor + sou + wes + eas;
-                if (edgeSum == 0) {
-                    toBeDrawn = this.AA;
-                } else if (edgeSum == 1) {
-                    toBeDrawn = this.AB;
-                } else if (edgeSum == 2) {
-                    toBeDrawn = this.AC;
-                } else if (edgeSum == 3) {
-                    toBeDrawn = this.AD;
-                } else if (edgeSum == 4) {
-                    toBeDrawn = this.AE;
-                }
-                console.log(toBeDrawn.src)
-                let angleInRadians = Math.PI / 2; // 90 degrees CC
                 ctx.translate(this.x, this.y);
-                ctx.rotate(angleInRadians);
-                ctx.drawImage(toBeDrawn, -this.gridSize*(this.width/2.0 - j), 
-                                         -this.gridSize*(this.height/2.0 - i),
+                //ctx.rotate(angleInRadians);
+                ctx.drawImage(toBeDrawn, this.gridSize*(-this.width/2.0 + j), 
+                                         this.gridSize*(this.height/2.0 - i - 1),
                                          this.gridSize,this.gridSize);
-                ctx.rotate(-angleInRadians);
+                //ctx.rotate(-angleInRadians);
+                ctx.fillText(j + " " + i, this.gridSize*(-this.width/2.0 + j), 
+                this.gridSize*(this.height/2.0 - i - 1),
+                this.gridSize,this.gridSize);
                 ctx.translate(-this.x, -this.y);
-
+                if (j == 2 && i == 1) {
+                    //console.log(j, i, edgeSum);
+                }
+                console.log(player.x, player.y)
                 // ctx.rotate(Math.PI / 2);
                 // // ctx.fillRect(this.x - this.gridSize*(this.width/2.0 - j)
                 // // - this.gridSpace*(this.width/2.0 - j +.5),
@@ -301,7 +336,6 @@ class Wall extends Actor{
             ctx.closePath();
             ctx.fill();
             ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
-        
         //console.log(this.x,this.y)
     }
     update() {
