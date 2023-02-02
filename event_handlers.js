@@ -6,37 +6,40 @@ const rightKey = "d";
 // [x,y,]
 const rooms = [
     
-    [1,4,7,7,
+    [2,5,9,9,
         [
-        [0,0,0],
+        [-1,-1,-1],
         [1,1,0],
-        [0,2,.5],
+        [2,2,0],
         [1,3,.5],
-        [0,4,.5],
-        [1,5,0],
-        [5,5,0],
-        [5,4,0],
-        [5,3,0],
-        [5,2,0],
-        [6,4,1,1]]
+        [2,4,.5],
+        [1,5,.5],
+        [2,6,0],
+        [6,6,0],
+        [6,3,0],
+        [6,4,0],
+        [6,3,0],
+        [7,5,1,1]]
     ], 
-    [1, 4, 8, 8,
+    [1, 4, 10, 10,
         [
-        [0,0,0],
+            [-1,-1,-1],
         [1,1,0],
-        [0,2,.5],
+        [2,2,0],
+        [1,2,.5],
         [1,3,.5],
-        [0,4,.5],
+        [1,4,.5],
         [1,5,0],
         [6,6,1,2]]
     ], 
-    [1, 4, 9, 9,
+    [1, 4, 11, 11,
         [
-        [0,0,0],
+            [-1,-1,-1],
         [1,1,0],
-        [0,2,0],
+        [2,1,0],
+        [1,2,0],
         [1,3,0],
-        [0,4,0],
+        [1,4,0],
         [1,5,0],
         [6,6,1,0]]
     ]
@@ -56,9 +59,16 @@ function onStart() {
 function createEnemy(x,y,type){
     console.log(type);
     if (type==-1){
-        console.log(type,x,y);
-        wall = new Wall(x,y);
-        enemyList.addActor(wall)
+        for (var i=0;i<GRID_WIDTH;i++){
+            for (var j=0;j<GRID_HEIGHT;j++){
+                if (j==0||i==0||j==GRID_HEIGHT-1||i==GRID_WIDTH-1){
+                    console.log('hi');
+                    wall = new Voyd(i,j);
+                    console.log('hi');
+                    enemyList.addActor(wall)
+                }
+            }
+        }
     }
     if (type==0){
         console.log(type,x,y);

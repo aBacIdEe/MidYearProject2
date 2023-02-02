@@ -195,7 +195,9 @@ class Player extends Actor{
         this.r = grid.gridSize/3;
     }
     playerUpdate(){
+        
         grid.update()
+        grid.blocked[this.x][this.y]=1;
   
         for (const actor of actorList.actors) {
             actor.update();
@@ -242,7 +244,7 @@ class Wall extends Actor{
             ctx.beginPath();
             //console.log(this.actX,  this.actY, this.r , 0, Math.PI * 2);
             ctx.arc(this.actX,  this.actY, this.r , 0, Math.PI * 2);
-            ctx.fillRect(this.actX-.5*grid.gridSize,this.actY-.5*grid.gridSize,grid.gridSize,grid.gridSize)
+            //ctx.fillRect(this.actX-.5*grid.gridSize,this.actY-.5*grid.gridSize,grid.gridSize,grid.gridSize)
             ctx.closePath();
             ctx.fill();
             ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
@@ -260,6 +262,17 @@ class Wall extends Actor{
         
     }
  
+}
+class Voyd extends Wall{
+    constructor(x, y) {
+        super(x,y)
+        //this.dir = dir
+        console.log('hi');
+    }
+    draw(){
+        ctx.fillStyle = backgroundColor;
+        ctx.fillRect(this.actX-.5*grid.gridSize,this.actY-.5*grid.gridSize,grid.gridSize,grid.gridSize);
+    }
 }
 class WalkingWall extends Wall{
     constructor(x, y,dir=0) {
