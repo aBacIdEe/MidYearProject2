@@ -51,12 +51,8 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     // Re-draw all the actors!
-    if (grid.blocked[i][j] == 1) {
-        ctx.drawImage(this.border, this.gridSize*(-this.width/2.0 + j), 
-                                   this.gridSize*(this.height/2.0 - i - 1), 
-                                   this.gridSize*1.2, this.gridSize*1.2);
-    }
     grid.draw();
+    grid.drawBorders();
     for (const actor of actorList.actors) {
         actor.draw();
 
@@ -66,9 +62,8 @@ function draw() {
         
     }
     player.draw();
-
+    grid.update();
     // Update all actors
-   grid.update()
   
     for (const actor of actorList.actors) {
         actor.update();

@@ -59,8 +59,33 @@ class Grid {
         this.border = new Image();
         this.border.src = "images/border.jpg";
     }
+    drawBorders() {
+        //console.log("Hi");
+        //console.log(grid.blocked);
+        for (var i = 0; i < this.width; i++){
+            for (var j = 0 ; j < this.height; j++){
+                //console.log("are you there");
+                //console.log(grid.blocked[0][0]);
+                if (grid.blocked[j][i] == 1) {
+                    //console.log("hi");
+                    //ctx.translate(-this.x, -this.y);
+                    ctx.translate(this.x, this.y);
+                //ctx.rotate(angleInRadians);
+                ctx.drawImage(this.border, this.gridSize * (-this.width  / 2.0 + j) - 0.1 * this.gridSize, 
+                                          -this.gridSize * ( this.height / 2.0 - i) - 0.1 * this.gridSize,
+                                           this.gridSize * 1.2, this.gridSize * 1.2);
+                //ctx.rotate(-angleInRadians);
+                // ctx.fillText(j + " " + i, this.gridSize*(-this.width/2.0 + j), 
+                // this.gridSize*(this.height/2.0 - i - 1),
+                // this.gridSize,this.gridSize);
+                ctx.translate(-this.x, -this.y);
+                }
+            }
+        }
+    }
+
     /**
-     * Draw the actor on the canvas.
+     * Draw the grid on the canvas.
      */
     draw() {
         this.gridSize = Math.min(canvas.width/this.width/1.5,
@@ -157,14 +182,14 @@ class Grid {
                                          this.gridSize*(this.height/2.0 - i - 1),
                                          this.gridSize,this.gridSize);
                 //ctx.rotate(-angleInRadians);
-                ctx.fillText(j + " " + i, this.gridSize*(-this.width/2.0 + j), 
-                this.gridSize*(this.height/2.0 - i - 1),
-                this.gridSize,this.gridSize);
+                // ctx.fillText(j + " " + i, this.gridSize*(-this.width/2.0 + j), 
+                // this.gridSize*(this.height/2.0 - i - 1),
+                // this.gridSize,this.gridSize);
                 ctx.translate(-this.x, -this.y);
                 if (j == 2 && i == 1) {
                     //console.log(j, i, edgeSum);
                 }
-                console.log(player.x, player.y)
+                // console.log(player.x, player.y)
                 // ctx.rotate(Math.PI / 2);
                 // // ctx.fillRect(this.x - this.gridSize*(this.width/2.0 - j)
                 // // - this.gridSpace*(this.width/2.0 - j +.5),
@@ -273,7 +298,10 @@ class Player extends Actor{
             ctx.closePath();
             ctx.fill();
             //console.log(typeof(this.image));
-            ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
+            ctx.drawImage(this.image, 
+                          this.actX - grid.gridSize / 2 + grid.gridSize * 0.1, 
+                          this.actY - grid.gridSize / 2 + grid.gridSize * 0.1, 
+                          grid.gridSize * 0.8, grid.gridSize * 0.8);
         
         //console.log(this.x,this.y)
     }
