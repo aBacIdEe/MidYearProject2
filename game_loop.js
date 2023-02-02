@@ -1,9 +1,12 @@
 
 // Main "boilerplate" code for a game loop. Unlikely to need to change this.
 const canvas = document.querySelector("#myCanvas");
+canvas.style.display="none";
 const projection = document.querySelector("#projection");
 const ctx = canvas.getContext("2d");
 const frame = projection.getContext("2d");
+frame.canvas.width  = window.innerWidth;
+frame.canvas.height = window.innerHeight;
 const FRAME_LENGTH = 30;
 const actorList = new ActorList();
 const enemyList = new ActorList();
