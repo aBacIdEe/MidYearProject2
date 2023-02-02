@@ -19,6 +19,9 @@ class Grid {
       
         for (var i = 0; i < this.width; i++) {
             this.blocked[i] = new Array(this.height);
+            for (var j = 0; j < this.height; j++) {
+                this.blocked[i][j]=0;
+            } 
         }
         // ABCDE for numbers 01234, Fromat being AA, AB, etc, corners then edges
         this.AA = new Image(); // blank
@@ -155,6 +158,9 @@ class Grid {
       
         for (var i = 0; i < this.width; i++) {
             this.blocked[i] = new Array(this.height);
+            for (var j = 0; j < this.height; j++) {
+                this.blocked[i][j]=0;
+            } 
         }
         
     }
@@ -202,6 +208,9 @@ class Actor {
     move() {
 
     }
+    playerUpdate(){
+        
+    }
 }
 
 class Player extends Actor{
@@ -238,8 +247,23 @@ class Player extends Actor{
         this.actY = this.setY(this.y);
         this.r = grid.gridSize/3;
     }
+    playerUpdate(){
+        
+        grid.update()
+        grid.blocked[this.x][this.y]=1;
+  
+        for (const actor of actorList.actors) {
+            actor.update();
 
+        }
+        for (const actor of enemyList.actors) {
+        actor.update();
+        
+        }
+        for (const enemy of enemyList.actors){ enemy.playerUpdate();}
+    }
     move(dx,dy){
+        
         var newx = dx + this.x;
         var newy = dy + this.y;
         if (newx<0 || newx>=GRID_WIDTH || newy<0 || newy>=GRID_HEIGHT){
@@ -250,6 +274,7 @@ class Player extends Actor{
         }
         this.x = newx;
         this.y = newy;
+        this.playerUpdate()
     }
 }
 
@@ -272,7 +297,7 @@ class Wall extends Actor{
             ctx.beginPath();
             //console.log(this.actX,  this.actY, this.r , 0, Math.PI * 2);
             ctx.arc(this.actX,  this.actY, this.r , 0, Math.PI * 2);
-            ctx.fillRect(this.actX-.5*grid.gridSize,this.actY-.5*grid.gridSize,grid.gridSize,grid.gridSize)
+            //ctx.fillRect(this.actX-.5*grid.gridSize,this.actY-.5*grid.gridSize,grid.gridSize,grid.gridSize)
             ctx.closePath();
             ctx.fill();
             ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
@@ -285,9 +310,73 @@ class Wall extends Actor{
         this.r = grid.gridSize/3;
         grid.blocked[this.x][this.y]=1;
     }
+    playerUpdate(){
+        
+    }
  
 }
+class Voyd extends Wall{
+    constructor(x, y) {
+        super(x,y)
+        //this.dir = dir
+        console.log('hi');
+    }
+    draw(){
+        ctx.fillStyle = backgroundColor;
+        ctx.fillRect(this.actX-.5*grid.gridSize,this.actY-.5*grid.gridSize,grid.gridSize,grid.gridSize);
+    }
+}
+class WalkingWall extends Wall{
+    constructor(x, y,dir=0) {
+        super(x,y)
+        this.dir = dir
+    }
+    
+getMoves() {
+    let validMoves = []; // const means const reference not a const array
+    let possibleMoves = [
+        [1, 0],
+        [0, 1],
+        [-1, 0],
+        [0, -1]
+    ];
+    for (const move of possibleMoves) {
+        let isValid = true;
+        let newX = move[0] + this.x;
+        let newY = move[1] + this.y;
+        if (newX < 0 || newX >= GRID_WIDTH) {isValid = false;}
+        else if (newY < 0 || newY >= GRID_HEIGHT) {isValid = false;}
+        
+        else if (grid.blocked[newX][newY]==1){
+            isValid =false;
+        }
+        if (isValid) {validMoves.push([newX, newY])}
+    }
+    return validMoves;
+}
+    playerUpdate(){
+            let dirs = [
+        [1, 0],
+        [0, 1],
+        [-1, 0],
+        [0, -1]
+        ];
+        var newx =dirs[this.dir][0]+this.x
+        var newy =dirs[this.dir][1]+this.y
+        console.log(newx,newy)
+        if (newx>=0&&newx<GRID_WIDTH&&newy>=0&&newy<GRID_HEIGHT&&grid.blocked[newx][newy]!=1){
+            this.x=newx
+            this.y =newy
 
+        }
+        else{
+            this.dir++;
+            this.dir%=4;
+        }
+        this.update()
+        
+    }
+}
 class Enemy extends Actor {
     constructor(x, y) {
         super(x, y);
@@ -300,6 +389,9 @@ class Enemy extends Actor {
         while (openSet) {
 
         }
+    }
+    playerUpdate(){
+        
     }
 }
 
@@ -361,118 +453,32 @@ class WalkingEnemy extends Enemy {
         this.actY =this.setY(this.y);
         this.r = grid.gridSize/3;
     }
-    // start and goal will be in format of (x,y)
-    A_star(start, goal) {
-        // things in open list will be in format f, g, h, x, y
-        console.log("hi:",start);
-        console.log("hi:",goal);
-        this.curPath = []
-        var openList   = [];
-        var parent = {start:null}
-        var costTo = {start:0}
-        var x = start[0]
-        var y = start[1]
-        var g = 0
-        var visited = new Array(GRID_WIDTH);
-      
-        for (var i = 0; i < GRID_WIDTH; i++) {
-            visited[i] = new Array(GRID_HEIGHT);
-            visited[i].fill(0);
-        }
-        var h = Math.abs(goal[0]-x)+Math.abs(goal[1]-y);
-        let dirs = [
-            [1, 0],
-            [0, 1],
-            [-1, 0],
-            [0, -1]
-        ];
-        openList.push([g+h,g,h,x,y]);
-        //console.log([g+h,g,h,x,y]);
-        var count = 1;
-        while(openList.length > 0) {
-            //console.log(count,"uewfoj");
-            openList.sort(function(x,y){return x[0]-y[0]});
-            
-            var cur = openList.shift();
-            // console.log(cur)
-            visited[cur[3]][cur[4]] = 1;
-            var isGood = 0;
-            for (var i =0;i<4;i++){
-                x = cur[3]+dirs[i][0];
-                y = cur[4]+dirs[i][1];
-                if ([x,y]==[goal[0],goal[1]]){
-                    parent[[x,y]] = [cur[3],cur[4]];
-                    console.log([cur[3],cur[4]]);
-                    isGood=1;
-                    break;
-                }
-                if (x<0||y<0||x>=GRID_WIDTH||y>=GRID_HEIGHT){
-                    continue;
-                }
-                //console.log(x,y);
-               // console.log(grid.blocked[x][y])
-                if (grid.blocked[x][y]!=1 && (visited[x][y]==0||cur[1]+1<costTo[[x,y]])){
-                    
-                   
-                    costTo[[x,y]]=cur[1]+1;
-                    g = cur[1]+1;
-                    h = Math.abs(goal[0]-x)+Math.abs(goal[1]-y);
-                    openList.push([g+h,g,h,x,y]);
-                    parent[[x,y]] = [cur[3],cur[4]];
-                    
-                }
-            }
-            if (isGood==1){
-                break;
-            }
-           
-        }
-        let spot = [goal[0],goal[1]];
-        let retPath = [];
-        while (spot[0]!=start[0]||spot[1]!=start[1]){
-            console.log(retPath);
-            var par = parent[spot];
-            retPath.unshift([spot[0]-par[0],spot[1]-par[1]]);
-            this.curPath.unshift([spot[0]-par[0],spot[1]-par[1]]);
-            spot = par;
-            
-        }
-        // No result was found -- empty array signifies failure to find path
-        console.log(retPath);
-        
-        return retPath;
-    }
+   
     
-    getMoves() {
-        let validMoves = []; // const means const reference not a const array
-        let possibleMoves = [
-            [1, 0],
-            [0, 1],
-            [-1, 0],
-            [0, -1]
-        ];
-        for (const move of possibleMoves) {
-            let isValid = true;
-            let newX = move[0] + this.x;
-            let newY = move[1] + this.y;
-            if (newX < 0 || newX >= GRID_WIDTH) {isValid = false;}
-            if (newY < 0 || newY >= GRID_HEIGHT) {isValid = false;}
-            if (isValid) {validMoves.push([newX, newY])}
-        }
-        return validMoves;
+getMoves() {
+    let validMoves = []; // const means const reference not a const array
+    let possibleMoves = [
+        [1, 0],
+        [0, 1],
+        [-1, 0],
+        [0, -1]
+    ];
+    for (const move of possibleMoves) {
+        let isValid = true;
+        let newX = move[0] + this.x;
+        let newY = move[1] + this.y;
+        if (newX < 0 || newX >= GRID_WIDTH) {isValid = false;}
+        if (newY < 0 || newY >= GRID_HEIGHT) {isValid = false;}
+        if (isValid) {validMoves.push([newX, newY])}
     }
-
-    // Gets path to nearest goal node for 3 turns.
-    getPath(turns) {
-        
-    }
-
+    return validMoves;
+}
     move() {
         // if there's a path to follow, follow it. Else: move randomly.
         
         if (this.curPath.length != 0) {
             var nextMove = this.curPath.shift();
-            console.log("hiiiiid");
+            //console.log("hiiiiid");
             for (const move of this.getMoves()){
                 if ([this.x+nextMove[0],this.y+nextMove[1]]==move){
                     this.x += nextMove[0];
@@ -495,3 +501,109 @@ class WalkingEnemy extends Enemy {
         }
     }
 }
+
+//  // start and goal will be in format of (x,y)
+//  A_star(start, goal) {
+//     // things in open list will be in format f, g, h, x, y
+//     console.log("hi:",start);
+//     console.log("hi:",goal);
+//     this.curPath = []
+//     var openList   = [];
+//     var parent = {start:null}
+//     var costTo = {start:0}
+//     var x = start[0]
+//     var y = start[1]
+//     var g = 0
+//     var visited = new Array(GRID_WIDTH);
+  
+//     for (var i = 0; i < GRID_WIDTH; i++) {
+//         visited[i] = new Array(GRID_HEIGHT);
+//         visited[i].fill(0);
+//     }
+//     var h = Math.abs(goal[0]-x)+Math.abs(goal[1]-y);
+//     let dirs = [
+//         [1, 0],
+//         [0, 1],
+//         [-1, 0],
+//         [0, -1]
+//     ];
+//     openList.push([g+h,g,h,x,y]);
+//     //console.log([g+h,g,h,x,y]);
+//     var count = 1;
+//     while(openList.length > 0) {
+//         //console.log(count,"uewfoj");
+//         openList.sort(function(x,y){return x[0]-y[0]});
+        
+//         var cur = openList.shift();
+//         // console.log(cur)
+//         visited[cur[3]][cur[4]] = 1;
+//         var isGood = 0;
+//         for (var i =0;i<4;i++){
+//             x = cur[3]+dirs[i][0];
+//             y = cur[4]+dirs[i][1];
+//             if ([x,y]==[goal[0],goal[1]]){
+//                 parent[[x,y]] = [cur[3],cur[4]];
+//                 console.log([cur[3],cur[4]]);
+//                 isGood=1;
+//                 break;
+//             }
+//             if (x<0||y<0||x>=GRID_WIDTH||y>=GRID_HEIGHT){
+//                 continue;
+//             }
+//             //console.log(x,y);
+//            // console.log(grid.blocked[x][y])
+//             if (grid.blocked[x][y]!=1 && (visited[x][y]==0||cur[1]+1<costTo[[x,y]])){
+                
+               
+//                 costTo[[x,y]]=cur[1]+1;
+//                 g = cur[1]+1;
+//                 h = Math.abs(goal[0]-x)+Math.abs(goal[1]-y);
+//                 openList.push([g+h,g,h,x,y]);
+//                 parent[[x,y]] = [cur[3],cur[4]];
+                
+//             }
+//         }
+//         if (isGood==1){
+//             break;
+//         }
+       
+//     }
+//     let spot = [goal[0],goal[1]];
+//     let retPath = [];
+//     while (spot[0]!=start[0]||spot[1]!=start[1]){
+//         console.log(retPath);
+//         var par = parent[spot];
+//         retPath.unshift([spot[0]-par[0],spot[1]-par[1]]);
+//         this.curPath.unshift([spot[0]-par[0],spot[1]-par[1]]);
+//         spot = par;
+        
+//     }
+//     // No result was found -- empty array signifies failure to find path
+//     console.log(retPath);
+    
+//     return retPath;
+// }
+
+// getMoves() {
+//     let validMoves = []; // const means const reference not a const array
+//     let possibleMoves = [
+//         [1, 0],
+//         [0, 1],
+//         [-1, 0],
+//         [0, -1]
+//     ];
+//     for (const move of possibleMoves) {
+//         let isValid = true;
+//         let newX = move[0] + this.x;
+//         let newY = move[1] + this.y;
+//         if (newX < 0 || newX >= GRID_WIDTH) {isValid = false;}
+//         if (newY < 0 || newY >= GRID_HEIGHT) {isValid = false;}
+//         if (isValid) {validMoves.push([newX, newY])}
+//     }
+//     return validMoves;
+// }
+
+// // Gets path to nearest goal node for 3 turns.
+// getPath(turns) {
+    
+// }
