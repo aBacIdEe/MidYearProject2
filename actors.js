@@ -19,6 +19,9 @@ class Grid {
       
         for (var i = 0; i < this.width; i++) {
             this.blocked[i] = new Array(this.height);
+            for (var j = 0; j < this.height; j++) {
+                this.blocked[i][j]=0;
+            } 
         }
         this.centerImage = new Image();
         this.rightEdge = new Image();
@@ -102,6 +105,9 @@ class Grid {
       
         for (var i = 0; i < this.width; i++) {
             this.blocked[i] = new Array(this.height);
+            for (var j = 0; j < this.height; j++) {
+                this.blocked[i][j]=0;
+            } 
         }
         
     }
@@ -188,7 +194,19 @@ class Player extends Actor{
         this.actY = this.setY(this.y);
         this.r = grid.gridSize/3;
     }
+    playerUpdate(){
+        grid.update()
+  
+        for (const actor of actorList.actors) {
+            actor.update();
 
+        }
+        for (const actor of enemyList.actors) {
+        actor.update();
+        
+        }
+        for (const enemy of enemyList.actors){ enemy.playerUpdate();}
+    }
     move(dx,dy){
         
         var newx = dx + this.x;
@@ -201,7 +219,7 @@ class Player extends Actor{
         }
         this.x = newx;
         this.y = newy;
-        for (const enemy of enemyList.actors){ enemy.playerUpdate();}
+        this.playerUpdate()
     }
 }
 
@@ -262,7 +280,11 @@ getMoves() {
         let newX = move[0] + this.x;
         let newY = move[1] + this.y;
         if (newX < 0 || newX >= GRID_WIDTH) {isValid = false;}
-        if (newY < 0 || newY >= GRID_HEIGHT) {isValid = false;}
+        else if (newY < 0 || newY >= GRID_HEIGHT) {isValid = false;}
+        
+        else if (grid.blocked[newX][newY]==1){
+            isValid =false;
+        }
         if (isValid) {validMoves.push([newX, newY])}
     }
     return validMoves;
@@ -274,21 +296,20 @@ getMoves() {
         [-1, 0],
         [0, -1]
         ];
-        var possMoves = this.getMoves();
-        var isGood = 0;
-        for (var i=0;i<4;i++){
-            for (const move of possMoves) {
-            if (this.x+dirs[(this.dir+i)%4][0]==move[0] &&this.y+dirs[(this.dir+i)%4][1]==move[1] ){
-                this.x=move[0];
-                this.y=move[1];
-                this.dir+=i;
-                break;
-            }
-            }
-            if (isGood){
-                break;
-            }
+        var newx =dirs[this.dir][0]+this.x
+        var newy =dirs[this.dir][1]+this.y
+        console.log(newx,newy)
+        if (newx>=0&&newx<GRID_WIDTH&&newy>=0&&newy<GRID_HEIGHT&&grid.blocked[newx][newy]!=1){
+            this.x=newx
+            this.y =newy
+
         }
+        else{
+            this.dir++;
+            this.dir%=4;
+        }
+        this.update()
+        
     }
 }
 class Enemy extends Actor {

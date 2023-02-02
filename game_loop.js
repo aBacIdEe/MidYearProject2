@@ -64,6 +64,7 @@ function draw() {
 
     // Update all actors
    grid.update()
+  
     for (const actor of actorList.actors) {
         actor.update();
 
@@ -72,8 +73,9 @@ function draw() {
         actor.update();
         
     }
-    
     player.update();
+    
+    
     // Text
     ctx.font = "48px serif";
     ctx.fillText(turnCount, 100, 100);

@@ -10,9 +10,9 @@ const rooms = [
         [
         [0,0,0],
         [1,1,0],
-        [0,2,0],
-        [1,3,0],
-        [0,4,0],
+        [0,2,.5],
+        [1,3,.5],
+        [0,4,.5],
         [1,5,0],
         [5,5,0],
         [5,4,0],
@@ -24,9 +24,9 @@ const rooms = [
         [
         [0,0,0],
         [1,1,0],
-        [0,2,0],
-        [1,3,0],
-        [0,4,0],
+        [0,2,.5],
+        [1,3,.5],
+        [0,4,.5],
         [1,5,0],
         [6,6,1,2]]
     ], 
@@ -55,7 +55,17 @@ function onStart() {
 
 function createEnemy(x,y,type){
     console.log(type);
+    if (type==-1){
+        console.log(type,x,y);
+        wall = new Wall(x,y);
+        enemyList.addActor(wall)
+    }
     if (type==0){
+        console.log(type,x,y);
+        wall = new Wall(x,y);
+        enemyList.addActor(wall)
+    }
+    if (type==0.5){
         console.log(type,x,y);
         wall = new WalkingWall(x,y);
         enemyList.addActor(wall)
