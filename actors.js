@@ -285,7 +285,7 @@ class Player extends Actor{
     playerUpdate(){
         
         grid.update()
-        grid.blocked[this.x][this.y]=1;
+        grid.blocked[this.x][this.y]=2;
   
         for (const actor of actorList.actors) {
             actor.update();
@@ -296,6 +296,7 @@ class Player extends Actor{
         
         }
         for (const enemy of enemyList.actors){ enemy.playerUpdate();}
+        grid.draw()
     }
     move(dx,dy){
         
