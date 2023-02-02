@@ -1,7 +1,9 @@
 
 // Main "boilerplate" code for a game loop. Unlikely to need to change this.
-const canvas = document.querySelector("canvas");
+const canvas = document.querySelector("#myCanvas");
+const projection = document.querySelector("#projection");
 const ctx = canvas.getContext("2d");
+const frame = projection.getContext("2d");
 const FRAME_LENGTH = 30;
 const actorList = new ActorList();
 const enemyList = new ActorList();
@@ -74,12 +76,15 @@ function draw() {
         
     }
     player.update();
-    
-    
+        
     // Text
     ctx.font = "48px serif";
     ctx.fillText(turnCount, 100, 100);
+
+    var render = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+    frame.putImageData(render, 0, 0);
 }
+
 // Functions to control (pause/continue) the game loop.
 function pauseDrawing() {
     if (drawIntervalId !== undefined)

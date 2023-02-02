@@ -350,7 +350,7 @@ class Wall extends Actor{
         this.color = "#1451e0";
         this.r = grid.gridSize/3;
         this.image = new Image();
-        this.image.src = "images/wall.jpg";
+        this.image.src = "images/AE.jpg";
     }
 
     draw() {
