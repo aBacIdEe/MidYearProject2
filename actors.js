@@ -23,28 +23,69 @@ class Grid {
                 this.blocked[i][j]=0;
             } 
         }
-        this.centerImage = new Image();
-        this.rightEdge = new Image();
-        this.leftEdge = new Image();
-        this.bottomEdge = new Image();
-        this.topEdge = new Image();
-        this.bottomLeftCorner = new Image();
-        this.bottomRightCorner = new Image();
-        this.topRightCorner = new Image();
-        this.topLeftCorner = new Image();
-        this.centerImage.src = "images/tileCenter.jpg";
-        this.rightEdge.src = "images/rightEdge.jpg";
-        this.leftEdge.src = "images/leftEdge.jpg";
-        this.bottomEdge.src = "images/bottomEdge.jpg";
-        this.topEdge.src = "images/topEdge.jpg";
-        this.bottomLeftCorner.src = "images/bottomLeftCorner.jpg";
-        this.bottomRightCorner.src = "images/bottomRightCorner.jpg";
-        this.topRightCorner.src = "images/topRightCorner.jpg";
-        this.topLeftCorner.src = "images/topLeftCorner.jpg";
+        // ABCDE for numbers 01234, Fromat being AA, AB, etc, corners then edges
+        this.AA = new Image(); // blank
+        // this.BA = new Image(); // no edges
+        // this.CA = new Image();
+        // this.CAdiag = new Image();
+        // this.DA = new Image();
+        // this.EA = new Image();
+        // this.AB = new Image(); // one edge
+        // this.BB = new Image();
+        // this.CB = new Image();
+        // this.AC = new Image(); // two edges
+        // this.ACpara = new Image();
+        // this.BC = new Image();
+        // this.AD = new Image(); // three edges
+        // this.AE = new Image(); // four edges
 
+        this.AA.src = "images/AA.jpg";
+        // this.BA.src = "images/BA.jpg";
+        // this.CA.src = "images/CA.jpg";
+        // this.CAdiag.src = "images/CAdiag.jpg";
+        // this.DA.src = "images/DA.jpg";
+        // this.EA.src = "images/EA.jpg";
+        // this.AB.src = "images/AB.jpg";
+        // this.BB.src = "images/BB.jpg";
+        // this.CB.src = "images/CB.jpg";
+        // this.AC.src = "images/AC.jpg";
+        // this.ACpara.src = "images/ACpara.jpg";
+        // this.BC.src = "images/BC.jpg";
+        // this.AD.src = "images/AD.jpg";
+        // this.AE.src = "images/AE.jpg";
+
+        // this.debug = new Image();
+        // this.debug.src = "images/debug.jpg";
+        this.border = new Image();
+        this.border.src = "images/border.jpg";
     }
+    drawBorders() {
+        //console.log("Hi");
+        //console.log(grid.blocked);
+        for (var i = 0; i < this.width; i++){
+            for (var j = 0 ; j < this.height; j++){
+                //console.log("are you there");
+                //console.log(grid.blocked[0][0]);
+                if (grid.blocked[j][i] == 1) {
+                    //console.log("hi");
+                    //ctx.translate(-this.x, -this.y);
+                    ctx.translate(this.x, this.y);
+                //ctx.rotate(angleInRadians);
+                ctx.drawImage(this.border, this.gridSize * (-this.width  / 2.0 + j) - 0.1 * this.gridSize, 
+                                          -this.gridSize * ( this.height / 2.0 - i) - 0.1 * this.gridSize,
+                                           this.gridSize * 1.2, this.gridSize * 1.2);
+                //ctx.rotate(-angleInRadians);
+                // ctx.fillText(j + " " + i, this.gridSize*(-this.width/2.0 + j), 
+                // this.gridSize*(this.height/2.0 - i - 1),
+                // this.gridSize,this.gridSize);
+                ctx.translate(-this.x, -this.y);
+                }
+            }
+        }
+    }
+
     /**
-     * Draw the actor on the canvas.
+     * Draw the grid on the canvas.
      */
     draw() {
         this.gridSize = Math.min(canvas.width/this.width/1.5,
@@ -59,37 +100,109 @@ class Grid {
         
       
         ctx.fillStyle = "#e3c47d";
-
-        for (var i=0;i<this.height;i++){
-            for (var j=0;j<this.width;j++){
+        // i is x axis; j is y axis,  bot left is 1,1
+        for (var i=1;i<this.width - 1;i++){
+            for (var j=1;j<this.height - 1;j++){
+                //i = this.width - 2 - i;
+                // 1 Corner, 2 Corner, 2 Diag Corner, 3 Corner, 4 Corner, 1 Edge, 1 Edge 1 corner, 1 Edge 2 Corner, 2 Edge, 2 Edge 1 corner, 2 Edge Parallel, 3 Edge, 4 Edge
                 // detect four side surround, then three, then two, the one, then it's blank
-                if (i == 0 && j == 0) {
-                    var toBeDrawn = this.topLeftCorner;
-                } else if (i == 0 && j == this.width - 1) {
-                    var toBeDrawn = this.topRightCorner;
-                } else if (i == 0) {
-                    var toBeDrawn = this.topEdge;
-                } else if (i == this.height - 1) {
-                    var toBeDrawn = this.bottomEdge;
-                } else if (j == 0) {
-                    var toBeDrawn = this.leftEdge;
-                } else if (j == this.width - 1) {
-                    var toBeDrawn = this.rightEdge;
-                } else {
-                    var toBeDrawn = this.centerImage;
-                }
+                // if (i == 0 && j == 0) {
+                //     var toBeDrawn = this.topLeftCorner;
+                // } else if (i == 0 && j == this.width - 1) {
+                //     var toBeDrawn = this.topRightCorner;
+                // } else if (i == 0) {
+                //     var toBeDrawn = this.topEdge;
+                // } else if (i == this.height - 1) {
+                //     var toBeDrawn = this.bottomEdge;
+                // } else if (j == 0) {
+                //     var toBeDrawn = this.leftEdge;
+                // } else if (j == this.width - 1) {
+                //     var toBeDrawn = this.rightEdge;
+                // } else {
+                //     var toBeDrawn = this.centerImage;
+                // }
+                // let toBeDrawn = this.AA;
+                // let nor = 0;
+                // let sou = 0;
+                // let wes = 0;
+                // let eas = 0;
+                // if (this.blocked[i - 1][j] == 1) {
+                //     nor = 1;
+                // }
+                // if (this.blocked[i + 1][j] == 1) {
+                //     sou = 1;
+                // }
+                // if (this.blocked[i][j + 1] == 1) {
+                //     wes = 1;
+                // }
+                // if (this.blocked[i][j - 1] == 1) {
+                //     eas = 1;
+                // }
+                // let angleInRadians = Math.PI / 2; // 90 degrees CC
+                // let edgeSum = nor + sou + wes + eas;
+                // if (edgeSum == 0) {
+                //     toBeDrawn = this.AA;
+                // } else if (edgeSum == 1) {
+                //     toBeDrawn = this.AB;
+                //     if (nor == 1) {
+                //         angleInRadians = 3 * Math.PI / 2;
+                //     } else if (wes == 1) {
+                //         angleInRadians = 0;
+                //     } else if (sou == 1) {
+                //         angleInRadians = Math.PI / 2;
+                //     } else if (eas == 1) {
+                //         angleInRadians = Math.PI;
+                //     }
+                // } else if (edgeSum == 2) {
+                //     toBeDrawn = this.AC;
+                //     if (nor == 1 && wes == 1) {
+                //         angleInRadians = 3 * Math.PI / 2;
+                //     } else if (wes == 1 && sou == 1) {
+                //         angleInRadians = 0;
+                //     } else if (sou == 1 && eas == 1) {
+                //         angleInRadians = Math.PI / 2;
+                //     } else if (eas == 1 && nor == 1) {
+                //         angleInRadians = Math.PI;
+                //     }
+                // } else if (edgeSum == 3) {
+                //     toBeDrawn = this.AD;
+                // } else if (edgeSum == 4) {
+                //     toBeDrawn = this.AE;
+                // }
+                // if (i == 9 && j == 4) {
+                //     console.log(i, j, edgeSum);
+                //     console.log(nor, wes, sou, eas);
+                // }
+                // console.log(edgeSum);
                 
-                // ctx.fillRect(this.x - this.gridSize*(this.width/2.0 - j)
+                let toBeDrawn = this.AA;
+                ctx.translate(this.x, this.y);
+                //ctx.rotate(angleInRadians);
+                ctx.drawImage(toBeDrawn, this.gridSize*(-this.width/2.0 + j), 
+                                         this.gridSize*(this.height/2.0 - i - 1),
+                                         this.gridSize,this.gridSize);
+                //ctx.rotate(-angleInRadians);
+                // ctx.fillText(j + " " + i, this.gridSize*(-this.width/2.0 + j), 
+                // this.gridSize*(this.height/2.0 - i - 1),
+                // this.gridSize,this.gridSize);
+                ctx.translate(-this.x, -this.y);
+                if (j == 2 && i == 1) {
+                    //console.log(j, i, edgeSum);
+                }
+                // console.log(player.x, player.y)
+                // ctx.rotate(Math.PI / 2);
+                // // ctx.fillRect(this.x - this.gridSize*(this.width/2.0 - j)
+                // // - this.gridSpace*(this.width/2.0 - j +.5),
+                // // this.y - this.gridSize*(this.height/2.0 - i) 
+                // // - this.gridSpace*(this.height/2.0 - i +.5)
+                // // ,this.gridSize,this.gridSize);
+                // // console.log(this.centerImage);
+                // ctx.drawImage(toBeDrawn, this.x - this.gridSize*(this.width/2.0 - j)
                 // - this.gridSpace*(this.width/2.0 - j +.5),
                 // this.y - this.gridSize*(this.height/2.0 - i) 
                 // - this.gridSpace*(this.height/2.0 - i +.5)
                 // ,this.gridSize,this.gridSize);
-                // console.log(this.centerImage);
-                ctx.drawImage(toBeDrawn, this.x - this.gridSize*(this.width/2.0 - j)
-                - this.gridSpace*(this.width/2.0 - j +.5),
-                this.y - this.gridSize*(this.height/2.0 - i) 
-                - this.gridSpace*(this.height/2.0 - i +.5)
-                ,this.gridSize,this.gridSize);
+                // ctx.rotate(Math.PI / -2);
                 // ctx.drawImage(this.centerImage, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
             }
         }
@@ -185,7 +298,10 @@ class Player extends Actor{
             ctx.closePath();
             ctx.fill();
             //console.log(typeof(this.image));
-            ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
+            ctx.drawImage(this.image, 
+                          this.actX - grid.gridSize / 2 + grid.gridSize * 0.1, 
+                          this.actY - grid.gridSize / 2 + grid.gridSize * 0.1, 
+                          grid.gridSize * 0.8, grid.gridSize * 0.8);
         
         //console.log(this.x,this.y)
     }
@@ -234,7 +350,7 @@ class Wall extends Actor{
         this.color = "#1451e0";
         this.r = grid.gridSize/3;
         this.image = new Image();
-        this.image.src = "images/wall.jpg";
+        this.image.src = "images/AE.jpg";
     }
 
     draw() {
@@ -249,7 +365,6 @@ class Wall extends Actor{
             ctx.closePath();
             ctx.fill();
             ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
-        
         //console.log(this.x,this.y)
     }
     update() {
@@ -257,7 +372,6 @@ class Wall extends Actor{
         this.actY =this.setY(this.y);
         this.r = grid.gridSize/3;
         grid.blocked[this.x][this.y]=1;
-        
     }
     playerUpdate(){
         
