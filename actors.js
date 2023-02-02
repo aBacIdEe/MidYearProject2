@@ -208,7 +208,7 @@ class Player extends Actor{
         
         }
         for (const enemy of enemyList.actors){ enemy.playerUpdate();}
-        grid.draw()
+        
     }
     move(dx,dy){
         
@@ -313,7 +313,7 @@ getMoves() {
         var newx =dirs[this.dir][0]+this.x
         var newy =dirs[this.dir][1]+this.y
         console.log(newx,newy)
-        if (newx>=0&&newx<GRID_WIDTH&&newy>=0&&newy<GRID_HEIGHT&&grid.blocked[newx][newy]!=1){
+        if (newx>=0&&newx<GRID_WIDTH&&newy>=0&&newy<GRID_HEIGHT&&grid.blocked[newx][newy]==0){
             this.x=newx
             this.y =newy
 
@@ -340,6 +340,12 @@ class Enemy extends Actor {
         }
     }
     playerUpdate(){
+        
+    }
+    update() {
+        this.actX =this.setX(this.x);
+        this.actY =this.setY(this.y);
+       
         
     }
 }
@@ -376,81 +382,76 @@ class Goal extends Actor {
 }
 
 class WalkingEnemy extends Enemy {
-    constructor(x=Math.floor(Math.random() * GRID_WIDTH), y=Math.floor(Math.random()*  GRID_WIDTH)) {
-        super(x, y);
+    constructor(x=Math.floor(Math.random() * GRID_WIDTH), y=Math.floor(Math.random()*  GRID_WIDTH),dir=0){
+        super(x,y);
         this.color = "#a461c0";
         this.r = grid.gridSize/3;
-        this.curPath = [];
+        this.image = new Image();
+        this.image.src = "images/chicken.jpg";
+        this.dir = dir;
     }
 
     draw() {
         //ctx.fillStyle = "blue";
          
-            ctx.fillStyle = this.color;
-           
-            ctx.beginPath();
-            //console.log(this.actX,  this.actY, this.r , 0, Math.PI * 2);
-            ctx.arc(this.actX,  this.actY, this.r , 0, Math.PI * 2);
-            ctx.closePath();
-            ctx.fill();
+        ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
         
-        //console.log(this.x,this.y)
-    }
-    update() {
         
-        this.actX =this.setX(this.x);
-        this.actY =this.setY(this.y);
-        this.r = grid.gridSize/3;
     }
-   
-    
-getMoves() {
-    let validMoves = []; // const means const reference not a const array
-    let possibleMoves = [
-        [1, 0],
-        [0, 1],
-        [-1, 0],
-        [0, -1]
-    ];
-    for (const move of possibleMoves) {
-        let isValid = true;
-        let newX = move[0] + this.x;
-        let newY = move[1] + this.y;
-        if (newX < 0 || newX >= GRID_WIDTH) {isValid = false;}
-        if (newY < 0 || newY >= GRID_HEIGHT) {isValid = false;}
-        if (isValid) {validMoves.push([newX, newY])}
-    }
-    return validMoves;
-}
-    move() {
-        // if there's a path to follow, follow it. Else: move randomly.
         
-        if (this.curPath.length != 0) {
-            var nextMove = this.curPath.shift();
-            //console.log("hiiiiid");
-            for (const move of this.getMoves()){
-                if ([this.x+nextMove[0],this.y+nextMove[1]]==move){
-                    this.x += nextMove[0];
-                    this.y += nextMove[1];
-                    break;
-                }
-                
-            }
-            this.x += nextMove[0];
-            this.y += nextMove[1];
+    update(){
+        super.update()
+        grid.blocked[this.x][this.y]=1;
+    }
+    getMoves() {
+        let validMoves = []; // const means const reference not a const array
+        let possibleMoves = [
+            [1, 0],
+            [0, 1],
+            [-1, 0],
+            [0, -1]
+        ];
+        for (const move of possibleMoves) {
+            let isValid = true;
+            let newX = move[0] + this.x;
+            let newY = move[1] + this.y;
+            if (newX < 0 || newX >= GRID_WIDTH) {isValid = false;}
+            else if (newY < 0 || newY >= GRID_HEIGHT) {isValid = false;}
             
-        } else {
-            return;
-            let options = this.getMoves();
-            let randomIndex = Math.floor(Math.random() * options.length);
-            let newX = options[randomIndex][0];
-            let newY = options[randomIndex][1];
-            this.x = newX;
-            this.y = newY;
+            else if (grid.blocked[newX][newY]==1){
+                isValid =false;
+            }
+            if (isValid) {validMoves.push([newX, newY])}
+        }
+        return validMoves;
+    }
+        playerUpdate(){
+                let dirs = [
+            [1, 0],
+            [0, 1],
+            [-1, 0],
+            [0, -1]
+            ];
+            var newx =dirs[this.dir][0]+this.x
+            var newy =dirs[this.dir][1]+this.y
+            console.log(newx,newy)
+            if (newx>=0&&newx<GRID_WIDTH&&newy>=0&&newy<GRID_HEIGHT&&grid.blocked[newx][newy]!=1){
+                if (newx==player.x&&newy==player.y){
+                    alert("DEATh")
+                }
+                this.x=newx
+                this.y =newy
+                
+    
+            }
+            else{
+                this.dir++;
+                this.dir%=4;
+            }
+            this.update()
+            
         }
     }
-}
-
 //  // start and goal will be in format of (x,y)
 //  A_star(start, goal) {
 //     // things in open list will be in format f, g, h, x, y

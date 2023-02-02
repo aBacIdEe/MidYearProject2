@@ -19,7 +19,10 @@ const rooms = [
         [6,3,0],
         [6,4,0],
         [6,3,0],
-        [7,5,1,1]]
+        [7,5,1,1],
+        [5,3,2],
+        [5,4,2],
+        [5,7,2],]
     ], 
     [1, 4, 10, 10,
         [
@@ -84,6 +87,12 @@ function createEnemy(x,y,type){
         console.log(type,x,y);
         goal = new Goal(x,y);
         enemyList.addActor(goal)
+    }
+    if (type==2){
+        console.log(type,x,y);
+        chicken = new WalkingEnemy(x,y);
+        enemyList.addActor(chicken)
+        console.log("CHICKEN")
     }
 }
 
