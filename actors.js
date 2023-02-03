@@ -39,16 +39,17 @@ class Grid {
             for (var j = 0 ; j < this.height; j++){
                 //console.log("are you there");
                 //console.log(grid.blocked[0][0]);
-                if (grid.blocked[j][i] == 1) {
+                console.log(grid.blocked);
+                if (grid.blocked[i][j] == 1) {
                     //console.log("hi");
                     //ctx.translate(-this.x, -this.y);
                     ctx.translate(this.x, this.y);
                 //ctx.rotate(angleInRadians);
-                ctx.drawImage(this.border, this.gridSize * (-this.width  / 2.0 + j) - 0.1 * this.gridSize, 
-                                          -this.gridSize * ( this.height / 2.0 - i) - 0.1 * this.gridSize,
+                ctx.drawImage(this.border, this.gridSize * (-this.width  / 2.0 + i) - 0.1 * this.gridSize, 
+                                          -this.gridSize * (this.height / 2.0 - j) - 0.1 * this.gridSize,
                                            this.gridSize * 1.2, this.gridSize * 1.2);
                 //ctx.rotate(-angleInRadians);
-                // ctx.fillText(j + " " + i, this.gridSize*(-this.width/2.0 + j), 
+                //ctx.fillText(j + " " + i, this.gridSize*(-this.width/2.0 + j), 
                 // this.gridSize*(this.height/2.0 - i - 1),
                 // this.gridSize,this.gridSize);
                 ctx.translate(-this.x, -this.y);
@@ -80,8 +81,8 @@ class Grid {
                 let toBeDrawn = this.AA;
                 ctx.translate(this.x, this.y);
                 //ctx.rotate(angleInRadians);
-                ctx.drawImage(toBeDrawn, this.gridSize*(-this.width/2.0 + j), 
-                                         this.gridSize*(this.height/2.0 - i - 1),
+                ctx.drawImage(toBeDrawn, this.gridSize*(-this.width/2.0 + i), 
+                                         this.gridSize*(this.height/2.0 - j - 1),
                                          this.gridSize,this.gridSize);
                 //ctx.rotate(-angleInRadians);
                 // ctx.fillText(j + " " + i, this.gridSize*(-this.width/2.0 + j), 
