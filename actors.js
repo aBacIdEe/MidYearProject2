@@ -219,7 +219,7 @@ class Player extends Actor{
         this.isDead = 1;
     }
     move(dx,dy){
-        
+        if (player.isDead==0){
         var newx = dx + this.x;
         var newy = dy + this.y;
         if (newx<0 || newx>=GRID_WIDTH || newy<0 || newy>=GRID_HEIGHT){
@@ -230,6 +230,7 @@ class Player extends Actor{
         }
         this.x = newx;
         this.y = newy;
+    }
         this.playerUpdate()
     }
 }
@@ -335,6 +336,7 @@ getMoves() {
 class Enemy extends Actor {
     constructor(x, y) {
         super(x, y);
+        this.attackState = 0;
     }
 
     A_star(start, goal, h) {
@@ -353,6 +355,9 @@ class Enemy extends Actor {
         this.actY =this.setY(this.y);
        
         
+    }
+    attack(){
+
     }
 }
 
@@ -395,6 +400,7 @@ class WalkingEnemy extends Enemy {
         this.image = new Image();
         this.image.src = "images/chicken.jpg";
         this.dir = dir;
+        
     }
 
     draw() {
@@ -404,7 +410,7 @@ class WalkingEnemy extends Enemy {
         
         
     }
-        
+    
     update(){
         super.update()
         grid.blocked[this.x][this.y]=3;
@@ -435,6 +441,7 @@ class WalkingEnemy extends Enemy {
         return validMoves;
     }
         playerUpdate(){
+            if (this.attackState==0){
                 let dirs = [
             [1, 0],
             [0, 1],
@@ -444,21 +451,39 @@ class WalkingEnemy extends Enemy {
             var newx =dirs[this.dir][0]+this.x
             var newy =dirs[this.dir][1]+this.y
             console.log(newx,newy)
-            if (newx>=0&&newx<GRID_WIDTH&&newy>=0&&newy<GRID_HEIGHT&&(grid.blocked[newx][newy]==0||newx==player.x&&newy==player.y)){
-                if (newx==player.x&&newy==player.y){
-                    player.die();
-                }
+            if (newx>=0&&newx<GRID_WIDTH&&newy>=0&&newy<GRID_HEIGHT&&(grid.blocked[newx][newy]==0)){
+                
                 this.x=newx
                 this.y =newy
                 
     
             }
+            if (Math.abs( player.x-this.x)<=1&&Math.abs( player.y-this.y)<=1){
+                this.attackState=1;
+            }
             else{
                 this.dir++;
                 this.dir%=4;
             }
-            this.update()
+                
+            }
+            else if (this.attackState==1){
+                this.image.src="images/penny.jpg";
+                this.attackState=2;
+            }
+            else if (this.attackState==2){
+                this.image.src="images/wall.jpg";
+                this.attackState=3;
+            }
+            else if (this.attackState==3){
+                if (Math.abs( player.x-this.x)<=1&&Math.abs( player.y-this.y)<=1){
+                    player.die();
+                }
+                this.attackState=0;
+                 this.image.src="images/chicken.jpg";
+            }
             
+            this.update()
         }
     }
 //  // start and goal will be in format of (x,y)
