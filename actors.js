@@ -484,9 +484,13 @@ class WalkingEnemy extends Enemy {
             }
             else if (this.attackState==3){
                 if (Math.abs( player.x-this.x)<=1&&Math.abs( player.y-this.y)<=1){
-                    player.die();
-                    
+                    player.die();  
+                } else {
+                    this.attackState=0;
+                    this.image.src = "images/enemyS1.jpg";
+
                 }
+                //this.attackState=0;
                 //this.attackState=0;
             }
             
