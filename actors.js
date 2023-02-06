@@ -399,7 +399,7 @@ class WalkingEnemy extends Enemy {
         this.color = "#a461c0";
         this.r = grid.gridSize/3;
         this.image = new Image();
-        this.image.src = "images/chicken.jpg";
+        this.image.src = "images/enemyS1.jpg";
         this.dir = dir;
         
     }
@@ -469,11 +469,11 @@ class WalkingEnemy extends Enemy {
                 
             }
             else if (this.attackState==1){
-                this.image.src="images/penny.jpg";
+                this.image.src="images/enemyS2.jpg";
                 this.attackState=2;
             }
             else if (this.attackState==2){
-                this.image.src="images/wall.jpg";
+                this.image.src="images/enemyS3.jpg";
                 this.attackState=3;
             }
             else if (this.attackState==3){
@@ -481,7 +481,7 @@ class WalkingEnemy extends Enemy {
                     player.die();
                 }
                 this.attackState=0;
-                 this.image.src="images/chicken.jpg";
+                 this.image.src="images/enemyS1.jpg";
             }
             
             this.update()
