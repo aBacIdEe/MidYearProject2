@@ -173,11 +173,12 @@ class Player extends Actor{
         this.r = grid.gridSize/3;
         this.image = new Image();
         this.image.src = "images/penny.jpg";
+        this.isDead = 0;
     }
 
     draw() {
         //ctx.fillStyle = "blue";
-         
+            if (this.isDead==0){
             ctx.fillStyle = this.color;
            
             ctx.beginPath();
@@ -190,6 +191,7 @@ class Player extends Actor{
                           this.actX - grid.gridSize / 2 + grid.gridSize * 0.1, 
                           this.actY - grid.gridSize / 2 + grid.gridSize * 0.1, 
                           grid.gridSize * 0.8, grid.gridSize * 0.8);
+            }
         
         //console.log(this.x,this.y)
     }
@@ -214,18 +216,22 @@ class Player extends Actor{
         for (const enemy of enemyList.actors){ enemy.playerUpdate();}
         
     }
+    die(){
+        this.isDead = 1;
+    }
     move(dx,dy){
-        
+        if (player.isDead==0){
         var newx = dx + this.x;
         var newy = dy + this.y;
         if (newx<0 || newx>=GRID_WIDTH || newy<0 || newy>=GRID_HEIGHT){
             return;
         }
-        if (grid.blocked[newx][newy]==1){
+        if (grid.blocked[newx][newy]>0){
             return;
         }
         this.x = newx;
         this.y = newy;
+    }
         this.playerUpdate()
     }
 }
@@ -298,7 +304,7 @@ getMoves() {
         if (newX < 0 || newX >= GRID_WIDTH) {isValid = false;}
         else if (newY < 0 || newY >= GRID_HEIGHT) {isValid = false;}
         
-        else if (grid.blocked[newX][newY]==1){
+        else if (grid.blocked[newX][newY]>=1){
             isValid =false;
         }
         if (isValid) {validMoves.push([newX, newY])}
@@ -331,6 +337,7 @@ getMoves() {
 class Enemy extends Actor {
     constructor(x, y) {
         super(x, y);
+        this.attackState = 0;
     }
 
     A_star(start, goal, h) {
@@ -349,6 +356,9 @@ class Enemy extends Actor {
         this.actY =this.setY(this.y);
        
         
+    }
+    attack(){
+
     }
 }
 
@@ -391,6 +401,7 @@ class WalkingEnemy extends Enemy {
         this.image = new Image();
         this.image.src = "images/chicken.jpg";
         this.dir = dir;
+        
     }
 
     draw() {
@@ -400,10 +411,10 @@ class WalkingEnemy extends Enemy {
         
         
     }
-        
+    
     update(){
         super.update()
-        grid.blocked[this.x][this.y]=1;
+        grid.blocked[this.x][this.y]=3;
     }
     getMoves() {
         let validMoves = []; // const means const reference not a const array
@@ -420,14 +431,18 @@ class WalkingEnemy extends Enemy {
             if (newX < 0 || newX >= GRID_WIDTH) {isValid = false;}
             else if (newY < 0 || newY >= GRID_HEIGHT) {isValid = false;}
             
-            else if (grid.blocked[newX][newY]==1){
+             if ((newX!=player.x||newY!=player.y)&&grid.blocked[newX][newY]>=1){
                 isValid =false;
+            }
+             if(grid.blocked[newX][newY]==3){
+                isValid = false;
             }
             if (isValid) {validMoves.push([newX, newY])}
         }
         return validMoves;
     }
         playerUpdate(){
+            if (this.attackState==0){
                 let dirs = [
             [1, 0],
             [0, 1],
@@ -437,21 +452,39 @@ class WalkingEnemy extends Enemy {
             var newx =dirs[this.dir][0]+this.x
             var newy =dirs[this.dir][1]+this.y
             console.log(newx,newy)
-            if (newx>=0&&newx<GRID_WIDTH&&newy>=0&&newy<GRID_HEIGHT&&grid.blocked[newx][newy]!=1){
-                if (newx==player.x&&newy==player.y){
-                    alert("You were about to die!")
-                }
+            if (newx>=0&&newx<GRID_WIDTH&&newy>=0&&newy<GRID_HEIGHT&&(grid.blocked[newx][newy]==0)){
+                
                 this.x=newx
                 this.y =newy
                 
     
             }
+            if (Math.abs( player.x-this.x)<=1&&Math.abs( player.y-this.y)<=1){
+                this.attackState=1;
+            }
             else{
                 this.dir++;
                 this.dir%=4;
             }
-            this.update()
+                
+            }
+            else if (this.attackState==1){
+                this.image.src="images/penny.jpg";
+                this.attackState=2;
+            }
+            else if (this.attackState==2){
+                this.image.src="images/wall.jpg";
+                this.attackState=3;
+            }
+            else if (this.attackState==3){
+                if (Math.abs( player.x-this.x)<=1&&Math.abs( player.y-this.y)<=1){
+                    player.die();
+                }
+                this.attackState=0;
+                 this.image.src="images/chicken.jpg";
+            }
             
+            this.update()
         }
     }
 //  // start and goal will be in format of (x,y)
