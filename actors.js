@@ -39,7 +39,7 @@ class Grid {
             for (var j = 0 ; j < this.height; j++){
                 //console.log("are you there");
                 //console.log(grid.blocked[0][0]);
-                console.log(grid.blocked);
+                //console.log(grid.blocked);
                 if (grid.blocked[i][j] == 1) {
                     //console.log("hi");
                     //ctx.translate(-this.x, -this.y);
@@ -401,6 +401,7 @@ class WalkingEnemy extends Enemy {
         this.image = new Image();
         this.image.src = "images/enemyS1.jpg";
         this.dir = dir;
+        this.explosionStatus = 0;
         
     }
 
@@ -408,8 +409,10 @@ class WalkingEnemy extends Enemy {
         //ctx.fillStyle = "blue";
          
         ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
-        
-        
+        if (this.attackState==3){
+        this.explode();
+        this.image.src = "images/anima/explo/" + this.explosionStatus + ".jpg";
+        }
     }
     
     update(){
@@ -482,12 +485,19 @@ class WalkingEnemy extends Enemy {
             else if (this.attackState==3){
                 if (Math.abs( player.x-this.x)<=1&&Math.abs( player.y-this.y)<=1){
                     player.die();
+                    
                 }
-                this.attackState=0;
-                 this.image.src="images/enemyS1.jpg";
+                //this.attackState=0;
             }
             
             this.update()
+        }
+
+        explode() {
+            this.explosionStatus++;
+            if (this.explosionStatus == 7) {
+                this.explosionStatus = 0;
+            }
         }
     }
 //  // start and goal will be in format of (x,y)
