@@ -409,8 +409,8 @@ class WalkingEnemy extends Enemy {
         //ctx.fillStyle = "blue";
          
         ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
-        if (this.attackState==3){
-        this.explode();
+        if (this.attackState==3&&player.isDead){
+            this.explode();
         this.image.src = "images/anima/explo/" + this.explosionStatus + ".jpg";
         }
     }
@@ -484,11 +484,10 @@ class WalkingEnemy extends Enemy {
             }
             else if (this.attackState==3){
                 if (Math.abs( player.x-this.x)<=1&&Math.abs( player.y-this.y)<=1){
-                    player.die();  
+                    player.die();
                 } else {
                     this.attackState=0;
                     this.image.src = "images/enemyS1.jpg";
-
                 }
                 //this.attackState=0;
                 //this.attackState=0;
