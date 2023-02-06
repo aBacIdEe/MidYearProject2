@@ -457,12 +457,15 @@ class WalkingEnemy extends Enemy {
                 this.x=newx
                 this.y =newy
                 
-    
+                if (Math.abs( player.x-this.x)<=1&&Math.abs( player.y-this.y)<=1){
+                    this.attackState=1;
+                }
             }
-            if (Math.abs( player.x-this.x)<=1&&Math.abs( player.y-this.y)<=1){
-                this.attackState=1;
-            }
+           
             else{
+                if (Math.abs( player.x-this.x)<=1&&Math.abs( player.y-this.y)<=1){
+                    this.attackState=1;
+                }
                 this.dir++;
                 this.dir%=4;
             }
