@@ -411,8 +411,18 @@ class WalkingEnemy extends Enemy {
         ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
         if (this.attackState==3&&player.isDead){
             this.explode();
-        this.image.src = "images/anima/explo/" + this.explosionStatus + ".jpg";
+            for (var i=-1;i<2;i++){
+                for (var j=-1;j<2;j++){
+                    
+                    if (grid.blocked[this.x+i][this.y+j]==0 ||grid.blocked[this.x+i][this.y+j]==2){
+                        ctx.drawImage(this.image, this.setX(this.x+i)- grid.gridSize / 2, this.setY(this.y+j)- grid.gridSize / 2, grid.gridSize, grid.gridSize);
+                    }
+                }
+            }
+            this.image.src = "images/anima/explo/" + this.explosionStatus + ".jpg";
+            
         }
+        
     }
     
     update(){
