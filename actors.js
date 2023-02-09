@@ -275,9 +275,9 @@ class Wall extends Actor{
 
 class Voyd extends Wall{
     constructor(x, y) {
-        super(x,y)
+        super(x,y);
         //this.dir = dir
-        console.log('hi');
+        //console.log('hi');
     }
     draw(){
         ctx.fillStyle = backgroundColor;
@@ -333,6 +333,19 @@ getMoves() {
         }
         this.update()
         
+    }
+}
+
+class LaserWall extends Wall{
+    constructor(x, y) {
+        super(x, y);
+        this.image = new Image();
+        this.image.src = "images/laserSource.jpg";
+    }
+
+    draw() {
+    ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
+
     }
 }
 class Enemy extends Actor {
