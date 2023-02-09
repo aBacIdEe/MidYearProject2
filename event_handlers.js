@@ -123,6 +123,8 @@ const rooms = [
         [17, 4, 0],
 
         [3, 5, 0],
+        [4, 5, 0],
+        [17, 5, 3],
 
         [3, 6, 0], 
         [4, 6, 0],
@@ -188,7 +190,7 @@ const rooms = [
         [16, 9, 0],
         [17, 9, 0],
         
-        [16, 8, 2.2],
+        [16, 5, 2.2],
         [17, 8, 1, 2]]
 
 
@@ -257,6 +259,10 @@ function createEnemy(x,y,type){
         enemyList.addActor(chicken)
         
     
+    }
+    if (type==3) {
+        laser = new LaserWall(x,y);
+        enemyList.addActor(laser);
     }
     
 }
