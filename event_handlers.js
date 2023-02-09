@@ -39,7 +39,7 @@ const rooms = [
         [10,8,0],
     
         [20,7,1,1],
-        [13,2,2],
+        
         // [20,7,2],
         // [13,13,2],
     
@@ -48,7 +48,8 @@ const rooms = [
         [23,1,0],[23,2,0],[22,1,0],
         [11,13,0],[11,12,0],[12,13,0],
         [23,13,0],[23,12,0],[22,13,0],
-        [23,7,0],[13,7,0],[22,7,2],[12,7,2]
+      //  [23,7,0], [13,7,0],
+      [13,2,2], [13,12,2.2], [22,7,2.1],[12,7,2.3], [21,2,2], [21,12,2.2],
 
     ]
     ], 
@@ -242,12 +243,19 @@ function createEnemy(x,y,type){
         goal = new Goal(x,y);
         enemyList.addActor(goal)
     }
-    if (type==2){
+    if (type>=2 && type<3){
+        
         console.log(type,x,y);
         chicken = new WalkingEnemy(x,y);
+        console.log("dir" + chicken.dir)
+        chicken.dir+=Math.round((type-2)*10)
+        console.log(type,chicken.dir)
+        chicken.dir %=4
         enemyList.addActor(chicken)
-        console.log("CHICKEN")
+        
+    
     }
+    
 }
 
 function loadRoom(room) {
