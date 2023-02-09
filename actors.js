@@ -272,6 +272,7 @@ class Wall extends Actor{
     }
  
 }
+
 class Voyd extends Wall{
     constructor(x, y) {
         super(x,y)
