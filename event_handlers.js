@@ -246,11 +246,8 @@ function createEnemy(x,y,type){
     if (type>=2 && type<3){
         
         console.log(type,x,y);
-        chicken = new WalkingEnemy(x,y);
-        console.log("dir" + chicken.dir)
-        chicken.dir+=Math.round((type-2)*10)
-        console.log(type,chicken.dir)
-        chicken.dir %=4
+        chicken = new WalkingEnemy(x,y,Math.round((type-2)*10));
+       
         enemyList.addActor(chicken)
         
     
