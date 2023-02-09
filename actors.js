@@ -402,6 +402,7 @@ class Goal extends Actor {
         this.r = grid.gridSize/3;
         if (player.x == this.x && player.y == this.y) {
             loadRoom(this.changeRoom);
+            grid.update()
         }
     }
 }
