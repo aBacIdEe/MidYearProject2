@@ -337,16 +337,82 @@ getMoves() {
 }
 
 class LaserWall extends Wall{
-    constructor(x, y) {
+    constructor(x, y, dir=0) {
         super(x, y);
-        this.image = new Image();
+        this.dir = dir;
         this.image.src = "images/laserSource.jpg";
+        this.dist = 0;
+        // this.checkDist();
+        this.expImage = new Image();
+        this.explosionStatus = 0;
     }
 
-    draw() {
-    ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
-
+   
+    checkDist(){
+        console.log("hi");
+        let dirs = [
+            [1, 0],
+            [0, 1],
+            [-1, 0],
+            [0, -1]
+            ];
+            // console.log(this.y,this.dist,dirs[1])
+        this.dist=0;
+        console.log(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]])
+        console.log(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]])
+        while(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]]==0||grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]]==2){
+            this.dist++;
+            console.log("hi");
+            
+        }
+        console.log("dist" + this.dist)
     }
+        draw(){
+            this.checkDist()
+            super.draw();
+             let dirs = [
+                [1, 0],
+                [0, 1],
+                [-1, 0],
+                [0, -1]
+                ];
+            this.expImage.src = "images/anima/explo/" + this.explosionStatus + ".jpg";
+            for (let i=1;i<=this.dist;i++){
+                ctx.drawImage(this.expImage, this.setX(this.x+i*dirs[this.dir][0])- grid.gridSize / 2, this.setY(this.y+i*dirs[this.dir][1])- grid.gridSize / 2, grid.gridSize, grid.gridSize);
+            }
+            this.explode()
+        }
+        explode() {
+            this.explosionStatus++;
+            if (this.explosionStatus == 7) {
+                this.explosionStatus = 0;
+            }
+        }
+        playerUpdate(){
+            
+                let dirs = [
+            [1, 0],
+            [0, 1],
+            [-1, 0],
+            [0, -1]
+            ];
+            for (const enemy of enemyList.actors){if(enemy instanceof Enemy) enemy.update();}
+                     
+            
+                      
+            
+            for (let i=1;i<=this.dist;i++){
+                if (player.x == this.x+i*dirs[this.dir][0]&& player.y==this.y+i*dirs[this.dir][1]){
+                    player.die();
+                }
+                
+            }
+        
+        
+
+        }
+       
+    
 }
 class Enemy extends Actor {
     constructor(x, y) {

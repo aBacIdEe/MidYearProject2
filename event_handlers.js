@@ -124,8 +124,7 @@ const rooms = [
 
         [3, 5, 0],
         [4, 5, 0],
-        [17, 5, 3],
-
+        
         [3, 6, 0], 
         [4, 6, 0],
         [5, 6, 0],
@@ -189,9 +188,11 @@ const rooms = [
         [15, 9, 0],
         [16, 9, 0],
         [17, 9, 0],
-        
+        [17, 5, 3.2],
         [16, 5, 2.2],
-        [17, 8, 1, 2]]
+        [17, 8, 1, 2]
+        
+    ]
 
 
     ], 
@@ -257,8 +258,11 @@ function createEnemy(x,y,type){
         
     
     }
-    if (type==3) {
-        laser = new LaserWall(x,y);
+    console.log(type)
+    if (type>=3 && type<4) {
+        //laser = new LaserWall(x,y);
+        laser = new LaserWall(x,y,Math.round((type-3)*10));
+       // console.log('hi')
         enemyList.addActor(laser);
     }
     
@@ -271,11 +275,13 @@ function loadRoom(room) {
     GRID_WIDTH = rooms[room][2];
     GRID_HEIGHT = rooms[room][3];
     enemyList.removeAllActors();
+    grid.update()
     for (const thing of rooms[room][4]){
         if (thing.length === 4) { // it means it's a goal and has a specified destination
             goal = new Goal(thing[0], thing[1], thing[3]);
             enemyList.addActor(goal);
         } else {
+            console.log(thing[2])
             createEnemy(thing[0], thing[1], thing[2])
         }
     }
