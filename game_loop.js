@@ -68,14 +68,20 @@ function draw() {
     for (const actor of enemyList.actors) {
         actor.draw();
     }
-
-    player.update();
-
+    player.draw();
+    // Update all actors
+    grid.update();
+  
     for (const actor of actorList.actors) {
         actor.update();
     }
     for (const actor of enemyList.actors) {
         actor.update();
+    }
+    player.update();
+    if (aboutToChange!=-1){
+        loadRoom(aboutToChange);
+        aboutToChange = -1;
     }
         
     // Text
