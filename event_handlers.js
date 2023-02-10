@@ -3,6 +3,7 @@ const leftKey = "a";
 const downKey = "s";
 const rightKey = "d";
 let curRoom = 0;
+let aboutToChange  =-1
 
 // [x,y,]
 const rooms = [
@@ -191,7 +192,7 @@ const rooms = [
         [17, 9, 0],
         [17, 5, 3.2],
         [16, 5, 2.2],
-        [17, 8, 1, 2]
+       // [17, 8, 1, 2]
         
     ]
 
@@ -279,8 +280,9 @@ function loadRoom(room) {
     player.y = rooms[room][1];
     GRID_WIDTH = rooms[room][2];
     GRID_HEIGHT = rooms[room][3];
+    actorList.removeAllActors();
     enemyList.removeAllActors();
-    grid.update()
+    grid.onRoomLoad();
     for (const thing of rooms[room][4]){
         if (thing.length === 4) { // it means it's a goal and has a specified destination
             goal = new Goal(thing[0], thing[1], thing[3]);

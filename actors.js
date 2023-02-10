@@ -98,14 +98,23 @@ class Grid {
     /**
      * Update this actor for the next frame.
      */
-   
-    update() {
+    onRoomLoad(){
         this.width = GRID_WIDTH;
         this.height = GRID_HEIGHT
         this.blocked = new Array(this.width);
       
         for (var i = 0; i < this.width; i++) {
             this.blocked[i] = new Array(this.height);
+            for (var j = 0; j < this.height; j++) {
+                this.blocked[i][j]=0;
+            } 
+        }
+    }
+    update() {
+  
+      
+        for (var i = 0; i < this.width; i++) {
+           
             for (var j = 0; j < this.height; j++) {
                 this.blocked[i][j]=0;
             } 
@@ -202,9 +211,9 @@ class Player extends Actor{
     }
     playerUpdate(){
         
+       
         grid.update()
         grid.blocked[this.x][this.y]=2;
-  
         for (const actor of actorList.actors) {
             actor.update();
 
@@ -214,6 +223,7 @@ class Player extends Actor{
         
         }
         for (const enemy of enemyList.actors){ enemy.playerUpdate();}
+        
         
     }
     die(){
@@ -265,6 +275,11 @@ class Wall extends Actor{
         this.actX =this.setX(this.x);
         this.actY =this.setY(this.y);
         this.r = grid.gridSize/3;
+        
+        if (this.x>=GRID_WIDTH || this.y >=GRID_HEIGHT){
+        console.log(this.x,this.y);
+    }
+        
         grid.blocked[this.x][this.y]=1;
     }
     playerUpdate(){
@@ -475,7 +490,8 @@ class Goal extends Actor {
         this.actY = this.setY(this.y);
         this.r = grid.gridSize/3;
         if (player.x == this.x && player.y == this.y) {
-            loadRoom(this.changeRoom);
+            aboutToChange = this.changeRoom;
+            
             grid.update()
         }
     }

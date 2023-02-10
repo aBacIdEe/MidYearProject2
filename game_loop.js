@@ -68,6 +68,7 @@ function draw() {
     }
     player.draw();
     // Update all actors
+    grid.update();
   
     for (const actor of actorList.actors) {
         actor.update();
@@ -78,6 +79,10 @@ function draw() {
         
     }
     player.update();
+    if (aboutToChange!=-1){
+        loadRoom(aboutToChange);
+        aboutToChange = -1;
+    }
         
     // Text
     ctx.font = "48px serif";
