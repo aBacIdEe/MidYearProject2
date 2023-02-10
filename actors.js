@@ -345,6 +345,7 @@ class LaserWall extends Wall{
         // this.checkDist();
         this.expImage = new Image();
         this.explosionStatus = 0;
+        this.active = 0;
     }
 
    
@@ -369,8 +370,11 @@ class LaserWall extends Wall{
         console.log("dist" + this.dist)
     }
         draw(){
-            this.checkDist()
+            //this.checkDist()
             super.draw();
+            if (this.active){
+                this.checkDist();
+            }
              let dirs = [
                 [1, 0],
                 [0, 1],
@@ -380,6 +384,9 @@ class LaserWall extends Wall{
             this.expImage.src = "images/anima/explo/" + this.explosionStatus + ".jpg";
             for (let i=1;i<=this.dist;i++){
                 ctx.drawImage(this.expImage, this.setX(this.x+i*dirs[this.dir][0])- grid.gridSize / 2, this.setY(this.y+i*dirs[this.dir][1])- grid.gridSize / 2, grid.gridSize, grid.gridSize);
+                if (player.x == this.x+i*dirs[this.dir][0]&& player.y==this.y+i*dirs[this.dir][1]){
+                    player.die();
+                }
             }
             this.explode()
         }
@@ -390,6 +397,7 @@ class LaserWall extends Wall{
             }
         }
         playerUpdate(){
+            this.active = 1;
             
                 let dirs = [
             [1, 0],
