@@ -2,6 +2,7 @@ const upKey = "w";
 const leftKey = "a";
 const downKey = "s";
 const rightKey = "d";
+let curRoom = 0;
 
 // [x,y,]
 const rooms = [
@@ -273,6 +274,7 @@ function createEnemy(x,y,type){
 
 function loadRoom(room) {
     
+    curRoom = room;
     player.x = rooms[room][0];
     player.y = rooms[room][1];
     GRID_WIDTH = rooms[room][2];
@@ -332,26 +334,29 @@ document.addEventListener("keydown", function (event) {
         // actorList.addActor(new Goal(0,7));
        
     }
-    if (event.key === "q") {
-        let enemy = new WalkingEnemy();
-        actorList.addActor(enemy);
-        enemyList.addActor(enemy)
+    // if (event.key === "q") {
+    //     let enemy = new WalkingEnemy();
+    //     actorList.addActor(enemy);
+    //     enemyList.addActor(enemy)
     
-    }
-    if (event.key === "j") {
-        gameUpdateNonPlayers();
-    }
-    if (event.key === "m") {
-        for (var enemy of enemyList.actors) {
+    // }
+    // if (event.key === "j") {
+    //     gameUpdateNonPlayers();
+    // }
+    // if (event.key === "m") {
+    //     for (var enemy of enemyList.actors) {
         
-            enemy.A_star([enemy.x,enemy.y],[0,7]);
+    //         enemy.A_star([enemy.x,enemy.y],[0,7]);
             
-        };
+    //     };
         
-    }
-    if (event.key === "g") {
-        let goal = new Goal();
-        actorList.addActor(goal);
+    // }
+    // if (event.key === "g") {
+    //     let goal = new Goal();
+    //     actorList.addActor(goal);
+    // }
+    if (event.key === "r") {
+        loadRoom(curRoom);
     }
     
 });

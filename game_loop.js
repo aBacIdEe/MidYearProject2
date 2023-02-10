@@ -67,7 +67,6 @@ function draw() {
         
     }
     player.draw();
-    grid.update();
     // Update all actors
   
     for (const actor of actorList.actors) {

@@ -358,9 +358,10 @@ class LaserWall extends Wall{
             ];
             // console.log(this.y,this.dist,dirs[1])
         this.dist=0;
-        console.log(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]])
-        console.log(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]])
-        while(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]]==0||grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]]==2){
+        // console.log(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]])
+        // console.log(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]])
+        while(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]] == 0 
+           || grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]] == 2){
             this.dist++;
             console.log("hi");
             
