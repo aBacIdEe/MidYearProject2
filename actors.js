@@ -448,17 +448,15 @@ class Goal extends Actor {
         this.color = "#888888";
         console.log(x, y);
         this.changeRoom = changeRoom;
+        this.image = new Image();
+        this.image.src = "images/goal.jpg";
     }
 
     draw() {
         //ctx.fillStyle = "blue";
         ctx.fillStyle = this.color;
        
-        ctx.beginPath();
-        //console.log(this.actX,  this.actY, this.r , 0, Math.PI * 2);
-        ctx.arc(this.actX,  this.actY, this.r, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.fill();
+        ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
         
         //console.log(this.x,this.y)
     }
