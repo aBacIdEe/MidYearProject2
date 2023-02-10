@@ -3,8 +3,8 @@
 const canvas = document.querySelector("#myCanvas");
 canvas.style.display="none";
 const projection = document.querySelector("#projection");
-const ctx = canvas.getContext("2d");
-const frame = projection.getContext("2d");
+const ctx = canvas.getContext("2d", {willReadFrequently: true});
+const frame = projection.getContext("2d", {willReadFrequently: true});
 frame.canvas.width  = window.innerWidth;
 frame.canvas.height = window.innerHeight;
 const FRAME_LENGTH = 60;
@@ -58,26 +58,25 @@ function draw() {
     // Re-draw all the actors!
     grid.draw();
     grid.drawBorders();
-    for (const actor of actorList.actors) {
-        actor.draw();
-
-    }
-    for (const actor of enemyList.actors) {
-        actor.draw();
         
-    }
     player.draw();
     // Update all actors
-  
+
+    for (const actor of actorList.actors) {
+        actor.draw();
+    }
+    for (const actor of enemyList.actors) {
+        actor.draw();
+    }
+
+    player.update();
+
     for (const actor of actorList.actors) {
         actor.update();
-
     }
     for (const actor of enemyList.actors) {
         actor.update();
-        
     }
-    player.update();
         
     // Text
     ctx.font = "48px serif";

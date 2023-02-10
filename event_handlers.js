@@ -241,6 +241,8 @@ function createEnemy(x,y,type){
     if (type==0){
         console.log(type,x,y);
         wall = new Wall(x,y);
+        grid.blocked[x][y]=1;
+
         enemyList.addActor(wall)
     }
     if (type==0.5){
@@ -280,7 +282,7 @@ function loadRoom(room) {
     GRID_WIDTH = rooms[room][2];
     GRID_HEIGHT = rooms[room][3];
     enemyList.removeAllActors();
-    grid.update()
+    grid.newGrid();
     for (const thing of rooms[room][4]){
         if (thing.length === 4) { // it means it's a goal and has a specified destination
             goal = new Goal(thing[0], thing[1], thing[3]);
@@ -306,55 +308,6 @@ document.addEventListener("keydown", function (event) {
     if (event.key === downKey || event.key === "ArrowDown") {
         player.move(0,1);
     }
-    if (event.key === "p") {
-        // actorList.addActor(new Wall(2,3));
-        // actorList.addActor(new Wall(2,0));
-        // actorList.addActor(new Wall(3,5));
-        // actorList.addActor(new Wall(4,2));
-        // actorList.addActor(new Wall(2,4));
-        // actorList.addActor(new Wall(5,2));
-        // actorList.addActor(new Wall(5,5));
-        // actorList.addActor(new Wall(6,5));
-        // actorList.addActor(new Wall(3,2));
-        // actorList.addActor(new Wall(3,1));
-        // actorList.addActor(new Wall(4,5));
-        // actorList.addActor(new Wall(0,6));
-        // actorList.addActor(new Wall(1,6));
-       
-        // actorList.addActor(new Wall(7,6));
-        // let enemy = new WalkingEnemy(3,4);
-        // actorList.addActor(enemy);
-        // enemyList.addActor(enemy)
-        // enemy = new WalkingEnemy(7,0);
-        // actorList.addActor(enemy);
-        // enemyList.addActor(enemy)
-        // enemy = new WalkingEnemy(7,5);
-        // actorList.addActor(enemy);
-        // enemyList.addActor(enemy)
-        // actorList.addActor(new Goal(0,7));
-       
-    }
-    // if (event.key === "q") {
-    //     let enemy = new WalkingEnemy();
-    //     actorList.addActor(enemy);
-    //     enemyList.addActor(enemy)
-    
-    // }
-    // if (event.key === "j") {
-    //     gameUpdateNonPlayers();
-    // }
-    // if (event.key === "m") {
-    //     for (var enemy of enemyList.actors) {
-        
-    //         enemy.A_star([enemy.x,enemy.y],[0,7]);
-            
-    //     };
-        
-    // }
-    // if (event.key === "g") {
-    //     let goal = new Goal();
-    //     actorList.addActor(goal);
-    // }
     if (event.key === "r") {
         loadRoom(curRoom);
     }

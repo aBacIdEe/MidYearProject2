@@ -99,7 +99,17 @@ class Grid {
      * Update this actor for the next frame.
      */
    
-    update() {
+    wipe() {
+        for (var i = 0; i < this.width; i++) {
+            //this.blocked[i] = new Array(this.height);
+            for (var j = 0; j < this.height; j++) {
+                this.blocked[i][j]=0;
+            } 
+        }
+        
+    }
+
+    newGrid() {
         this.width = GRID_WIDTH;
         this.height = GRID_HEIGHT
         this.blocked = new Array(this.width);
@@ -110,7 +120,6 @@ class Grid {
                 this.blocked[i][j]=0;
             } 
         }
-        
     }
 
 }
@@ -202,7 +211,7 @@ class Player extends Actor{
     }
     playerUpdate(){
         
-        grid.update()
+        grid.wipe()
         grid.blocked[this.x][this.y]=2;
   
         for (const actor of actorList.actors) {
@@ -214,6 +223,8 @@ class Player extends Actor{
         
         }
         for (const enemy of enemyList.actors){ enemy.playerUpdate();}
+
+        console.log(grid.blocked);
         
     }
     die(){
@@ -248,18 +259,7 @@ class Wall extends Actor{
     }
 
     draw() {
-        //ctx.fillStyle = "blue";
-         
-            ctx.fillStyle = this.color;
-           
-            ctx.beginPath();
-            //console.log(this.actX,  this.actY, this.r , 0, Math.PI * 2);
-            ctx.arc(this.actX,  this.actY, this.r , 0, Math.PI * 2);
-            //ctx.fillRect(this.actX-.5*grid.gridSize,this.actY-.5*grid.gridSize,grid.gridSize,grid.gridSize)
-            ctx.closePath();
-            ctx.fill();
-            ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
-        //console.log(this.x,this.y)
+        ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
     }
     update() {
         this.actX =this.setX(this.x);
@@ -350,7 +350,6 @@ class LaserWall extends Wall{
 
    
     checkDist(){
-        console.log("hi");
         let dirs = [
             [1, 0],
             [0, 1],
@@ -358,16 +357,16 @@ class LaserWall extends Wall{
             [0, -1]
             ];
             // console.log(this.y,this.dist,dirs[1])
-        this.dist=0;
+        this.dist=1;
         // console.log(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]])
         // console.log(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]])
-        while(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]] == 0 
-           || grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]] == 2){
+        while(grid.blocked[this.x + (this.dist + 1) * dirs[this.dir][0]][this.y + (this.dist + 1) * dirs[this.dir][1]] == 0 
+           || grid.blocked[this.x + (this.dist + 1) * dirs[this.dir][0]][this.y + (this.dist + 1) * dirs[this.dir][1]] == 2){
             this.dist++;
-            console.log("hi");
+            // console.log("hi");
             
         }
-        console.log("dist" + this.dist)
+        //console.log("dist" + this.dist);
     }
         draw(){
             //this.checkDist()
@@ -428,26 +427,9 @@ class Enemy extends Actor {
         super(x, y);
         this.attackState = 0;
     }
-
-    A_star(start, goal, h) {
-        const openSet = [];
-        const cameFrom = [];
-
-        while (openSet) {
-
-        }
-    }
-    playerUpdate(){
-        
-    }
     update() {
         this.actX =this.setX(this.x);
         this.actY =this.setY(this.y);
-       
-        
-    }
-    attack(){
-
     }
 }
 
@@ -476,7 +458,6 @@ class Goal extends Actor {
         this.r = grid.gridSize/3;
         if (player.x == this.x && player.y == this.y) {
             loadRoom(this.changeRoom);
-            grid.update()
         }
     }
 }
@@ -502,7 +483,7 @@ class WalkingEnemy extends Enemy {
             for (var i=-1;i<2;i++){
                 for (var j=-1;j<2;j++){
                     
-                    if (grid.blocked[this.x+i][this.y+j]==0 ||grid.blocked[this.x+i][this.y+j]==2){
+                    if (grid.blocked[this.x+i][this.y+j]==0 || grid.blocked[this.x+i][this.y+j]==2){
                         ctx.drawImage(this.image, this.setX(this.x+i)- grid.gridSize / 2, this.setY(this.y+j)- grid.gridSize / 2, grid.gridSize, grid.gridSize);
                     }
                 }
