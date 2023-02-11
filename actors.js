@@ -23,10 +23,8 @@ class Grid {
                 this.blocked[i][j]=0;
             } 
         }
-        // ABCDE for numbers 01234, Fromat being AA, AB, etc, corners then edges
         this.AA = new Image(); // blank
         this.AA.src = "images/AA.jpg";
-
         // this.debug = new Image();
         // this.debug.src = "images/debug.jpg";
         this.border = new Image();
@@ -294,7 +292,6 @@ class LaserWall extends Wall{
         this.dir = dir;
         this.image.src = "images/laserSource.jpg";
         this.dist = 0;
-        // this.checkDist();
         this.expImage = new Image();
         this.explosionStatus = 0;
         this.active = 0;
@@ -312,8 +309,8 @@ class LaserWall extends Wall{
            || grid.blocked[this.x + (this.dist + 1) * dirs[this.dir][0]][this.y + (this.dist + 1) * dirs[this.dir][1]] == 2){
             this.dist++;
         }
-        // console.log("distance: " + this.dist);
     }
+
     draw() {
         super.draw();
         if (this.active){
@@ -334,12 +331,14 @@ class LaserWall extends Wall{
         }
         this.explode()
     }
+
     explode() {
         this.explosionStatus++;
         if (this.explosionStatus == 7) {
             this.explosionStatus = 0;
         }
     }
+
     playerUpdate(){
         this.active = 1;
         
@@ -349,20 +348,18 @@ class LaserWall extends Wall{
         [-1, 0],
         [0, -1]
         ];
-        for (const enemy of enemyList.actors){if(enemy instanceof Enemy) enemy.update();}
-                    
-        
-                    
-        
+
+        for (const enemy of enemyList.actors) {
+            if (enemy instanceof Enemy) {
+                enemy.update();
+            }
+        }
+  
         for (let i=1;i<=this.dist;i++){
             if (player.x == this.x+i*dirs[this.dir][0]&& player.y==this.y+i*dirs[this.dir][1]){
                 player.die();
-            }
-            
+            }    
         }
-    
-    
-
     }
        
     

@@ -7,15 +7,15 @@ const ctx = canvas.getContext("2d", {willReadFrequently: true});
 const frame = projection.getContext("2d", {willReadFrequently: true});
 frame.canvas.width  = window.innerWidth;
 frame.canvas.height = window.innerHeight;
-const FRAME_LENGTH = 30;
+ctx.canvas.width  = window.innerWidth;
+ctx.canvas.height = window.innerHeight;
+const FRAME_LENGTH = 33;
 const actorList = new ActorList();
 const enemyList = new ActorList();
 var GRID_WIDTH = 10;
 var GRID_HEIGHT= 10;
 const backgroundColor = "#252525";
 
-let turnCount = 1;
-let screen
 let grid = new Grid(GRID_WIDTH, GRID_HEIGHT);
 let player = new Player(3, 4);
 
@@ -61,7 +61,7 @@ function draw() {
         
     // Text
     ctx.font = "48px serif";
-    ctx.fillText(turnCount, 100, 100);
+    ctx.fillText("Hi There", 100, 100);
 
     var render = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
     frame.putImageData(render, 0, 0);
@@ -76,14 +76,6 @@ function pauseDrawing() {
 function continueDrawing() {
     if (drawIntervalId === undefined)
         drawIntervalId = window.setInterval(draw, FRAME_LENGTH);
-}
-function gameUpdateNonPlayers() {
-    turnCount++;
-    for (const enemy of enemyList.actors) {
-
-        enemy.move();
-
-    };
 }
 // document.querySelector("#pause").addEventListener("click", pauseDrawing);
 // document.querySelector("#continue").addEventListener("click", continueDrawing);
