@@ -33,25 +33,14 @@ class Grid {
         this.border.src = "images/border.jpg";
     }
     drawBorders() {
-        //console.log("Hi");
-        //console.log(grid.blocked);
+
         for (var i = 0; i < this.width; i++){
             for (var j = 0 ; j < this.height; j++){
-                //console.log("are you there");
-                //console.log(grid.blocked[0][0]);
-                //console.log(grid.blocked);
                 if (grid.blocked[i][j] == 1) {
-                    //console.log("hi");
-                    //ctx.translate(-this.x, -this.y);
                     ctx.translate(this.x, this.y);
-                //ctx.rotate(angleInRadians);
                 ctx.drawImage(this.border, this.gridSize * (-this.width  / 2.0 + i) - 0.1 * this.gridSize, 
                                           -this.gridSize * (this.height / 2.0 - j) - 0.1 * this.gridSize,
                                            this.gridSize * 1.2, this.gridSize * 1.2);
-                //ctx.rotate(-angleInRadians);
-                //ctx.fillText(j + " " + i, this.gridSize*(-this.width/2.0 + j), 
-                // this.gridSize*(this.height/2.0 - i - 1),
-                // this.gridSize,this.gridSize);
                 ctx.translate(-this.x, -this.y);
                 }
             }
@@ -65,14 +54,9 @@ class Grid {
         this.gridSize = Math.min(canvas.width/this.width/1.5,
                                  canvas.height/this.height/1.5);
         this.gridSpace = 0;
-        // this.gridSpace = Math.min(canvas.width/this.width/20,
-        //                           canvas.height/this.height/20);
         this.x = canvas.width/2;
         this.y = canvas.height/2;
-        // Use ctx to draw. A sample (drawing a small circle):
-        //console.log("hi");
         
-      
         ctx.fillStyle = "#e3c47d";
         // i is x axis; j is y axis,  bot left is 1,1
         for (var i=1;i<this.width - 1;i++){
@@ -80,17 +64,11 @@ class Grid {
                 
                 let toBeDrawn = this.AA;
                 ctx.translate(this.x, this.y);
-                //ctx.rotate(angleInRadians);
                 ctx.drawImage(toBeDrawn, this.gridSize*(-this.width/2.0 + i), 
                                          this.gridSize*(this.height/2.0 - j - 1),
                                          this.gridSize,this.gridSize);
-                //ctx.rotate(-angleInRadians);
-                // ctx.fillText(j + " " + i, this.gridSize*(-this.width/2.0 + j), 
-                // this.gridSize*(this.height/2.0 - i - 1),
-                // this.gridSize,this.gridSize);
                 ctx.translate(-this.x, -this.y);
                 if (j == 2 && i == 1) {
-                    //console.log(j, i, edgeSum);
                 }
             }
         }
@@ -123,11 +101,6 @@ class Grid {
     }
 
 }
-
-
-
-
-
 class Actor {
 
     setX(n){
@@ -169,7 +142,6 @@ class Actor {
         
     }
 }
-
 class Player extends Actor{
     constructor(x, y) {
         super(x, y);
@@ -186,23 +158,12 @@ class Player extends Actor{
     }
 
     draw() {
-        //ctx.fillStyle = "blue";
-            if (this.isDead==0){
-            ctx.fillStyle = this.color;
-           
-            ctx.beginPath();
-            //console.log(this.actX,  this.actY, this.r , 0, Math.PI * 2);
-            ctx.arc(this.actX,  this.actY, this.r, 0, Math.PI * 2);
-            ctx.closePath();
-            ctx.fill();
-            //console.log(typeof(this.image));
-            ctx.drawImage(this.image, 
-                          this.actX - grid.gridSize / 2 + grid.gridSize * 0.1, 
-                          this.actY - grid.gridSize / 2 + grid.gridSize * 0.1, 
-                          grid.gridSize * 0.8, grid.gridSize * 0.8);
-            }
-        
-        //console.log(this.x,this.y)
+        if (this.isDead==0){
+        ctx.drawImage(this.image, 
+                        this.actX - grid.gridSize / 2 + grid.gridSize * 0.1, 
+                        this.actY - grid.gridSize / 2 + grid.gridSize * 0.1, 
+                        grid.gridSize * 0.8, grid.gridSize * 0.8);
+        }
     }
     update() {
         this.actX = this.setX(this.x);
@@ -210,8 +171,6 @@ class Player extends Actor{
         this.r = grid.gridSize/3;
     }
     playerUpdate(){
-        
-       
         grid.update()
         grid.blocked[this.x][this.y]=2;
         for (const actor of actorList.actors) {
@@ -223,14 +182,12 @@ class Player extends Actor{
         
         }
         for (const enemy of enemyList.actors){ enemy.playerUpdate();}
-
-        console.log(grid.blocked);
-        
-        
     }
+
     die(){
         this.isDead = 1;
     }
+
     move(dx,dy){
         if (player.isDead==0){
         var newx = dx + this.x;
@@ -247,7 +204,6 @@ class Player extends Actor{
         this.playerUpdate()
     }
 }
-
 class Wall extends Actor{
     constructor(x, y) {
         super(x,y)
@@ -266,11 +222,6 @@ class Wall extends Actor{
         this.actX =this.setX(this.x);
         this.actY =this.setY(this.y);
         this.r = grid.gridSize/3;
-        
-        if (this.x>=GRID_WIDTH || this.y >=GRID_HEIGHT){
-        console.log(this.x,this.y);
-    }
-        
         grid.blocked[this.x][this.y]=1;
     }
     playerUpdate(){
@@ -278,12 +229,9 @@ class Wall extends Actor{
     }
  
 }
-
 class Voyd extends Wall{
     constructor(x, y) {
         super(x,y);
-        //this.dir = dir
-        //console.log('hi');
     }
     draw(){
         ctx.fillStyle = backgroundColor;
@@ -319,7 +267,7 @@ getMoves() {
     return validMoves;
 }
     playerUpdate(){
-            let dirs = [
+        let dirs = [
         [1, 0],
         [0, 1],
         [-1, 0],
@@ -327,7 +275,6 @@ getMoves() {
         ];
         var newx =dirs[this.dir][0]+this.x
         var newy =dirs[this.dir][1]+this.y
-        console.log(newx,newy)
         if (newx>=0&&newx<GRID_WIDTH&&newy>=0&&newy<GRID_HEIGHT&&grid.blocked[newx][newy]==0){
             this.x=newx
             this.y =newy
@@ -341,7 +288,6 @@ getMoves() {
         
     }
 }
-
 class LaserWall extends Wall{
     constructor(x, y, dir=0) {
         super(x, y);
@@ -353,7 +299,6 @@ class LaserWall extends Wall{
         this.explosionStatus = 0;
         this.active = 0;
     }
-
    
     checkDist(){
         let dirs = [
@@ -362,69 +307,63 @@ class LaserWall extends Wall{
             [-1, 0],
             [0, -1]
             ];
-            // console.log(this.y,this.dist,dirs[1])
-        this.dist=1;
-        // console.log(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]])
-        // console.log(grid.blocked[this.x+(this.dist+1)*dirs[this.dir][0]][this.y+(this.dist+1)*dirs[this.dir][1]])
+        this.dist = 0;
         while(grid.blocked[this.x + (this.dist + 1) * dirs[this.dir][0]][this.y + (this.dist + 1) * dirs[this.dir][1]] == 0 
            || grid.blocked[this.x + (this.dist + 1) * dirs[this.dir][0]][this.y + (this.dist + 1) * dirs[this.dir][1]] == 2){
             this.dist++;
-            // console.log("hi");
-            
         }
-        //console.log("dist" + this.dist);
+        // console.log("distance: " + this.dist);
     }
-        draw(){
-            //this.checkDist()
-            super.draw();
-            if (this.active){
-                this.checkDist();
-            }
-             let dirs = [
-                [1, 0],
-                [0, 1],
-                [-1, 0],
-                [0, -1]
-                ];
-            this.expImage.src = "images/anima/explo/" + this.explosionStatus + ".jpg";
-            for (let i=1;i<=this.dist;i++){
-                ctx.drawImage(this.expImage, this.setX(this.x+i*dirs[this.dir][0])- grid.gridSize / 2, this.setY(this.y+i*dirs[this.dir][1])- grid.gridSize / 2, grid.gridSize, grid.gridSize);
-                if (player.x == this.x+i*dirs[this.dir][0]&& player.y==this.y+i*dirs[this.dir][1]){
-                    player.die();
-                }
-            }
-            this.explode()
+    draw() {
+        super.draw();
+        if (this.active){
+            this.checkDist();
         }
-        explode() {
-            this.explosionStatus++;
-            if (this.explosionStatus == 7) {
-                this.explosionStatus = 0;
-            }
-        }
-        playerUpdate(){
-            this.active = 1;
-            
-                let dirs = [
+            let dirs = [
             [1, 0],
             [0, 1],
             [-1, 0],
             [0, -1]
             ];
-            for (const enemy of enemyList.actors){if(enemy instanceof Enemy) enemy.update();}
-                     
-            
-                      
-            
-            for (let i=1;i<=this.dist;i++){
-                if (player.x == this.x+i*dirs[this.dir][0]&& player.y==this.y+i*dirs[this.dir][1]){
-                    player.die();
-                }
-                
+        this.expImage.src = "images/anima/explo/" + this.explosionStatus + ".jpg";
+        for (let i=1;i<=this.dist;i++){
+            ctx.drawImage(this.expImage, this.setX(this.x+i*dirs[this.dir][0])- grid.gridSize / 2, this.setY(this.y+i*dirs[this.dir][1])- grid.gridSize / 2, grid.gridSize, grid.gridSize);
+            if (player.x == this.x+i*dirs[this.dir][0]&& player.y==this.y+i*dirs[this.dir][1]){
+                player.die();
             }
-        
-        
-
         }
+        this.explode()
+    }
+    explode() {
+        this.explosionStatus++;
+        if (this.explosionStatus == 7) {
+            this.explosionStatus = 0;
+        }
+    }
+    playerUpdate(){
+        this.active = 1;
+        
+            let dirs = [
+        [1, 0],
+        [0, 1],
+        [-1, 0],
+        [0, -1]
+        ];
+        for (const enemy of enemyList.actors){if(enemy instanceof Enemy) enemy.update();}
+                    
+        
+                    
+        
+        for (let i=1;i<=this.dist;i++){
+            if (player.x == this.x+i*dirs[this.dir][0]&& player.y==this.y+i*dirs[this.dir][1]){
+                player.die();
+            }
+            
+        }
+    
+    
+
+    }
        
     
 }
@@ -438,24 +377,17 @@ class Enemy extends Actor {
         this.actY =this.setY(this.y);
     }
 }
-
 class Goal extends Actor {
     constructor(x=Math.floor(Math.random() * GRID_WIDTH), y=Math.floor(Math.random()*  GRID_WIDTH), changeRoom=0) {
         super(x, y);
         this.color = "#888888";
-        console.log(x, y);
         this.changeRoom = changeRoom;
         this.image = new Image();
         this.image.src = "images/goal.jpg";
     }
 
     draw() {
-        //ctx.fillStyle = "blue";
-        ctx.fillStyle = this.color;
-       
         ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
-        
-        //console.log(this.x,this.y)
     }
 
     update() {
@@ -469,7 +401,6 @@ class Goal extends Actor {
         }
     }
 }
-
 class WalkingEnemy extends Enemy {
     constructor(x=Math.floor(Math.random() * GRID_WIDTH), y=Math.floor(Math.random()*  GRID_WIDTH),dir=0){
         super(x,y);
@@ -490,7 +421,6 @@ class WalkingEnemy extends Enemy {
             this.explode();
             for (var i=-1;i<2;i++){
                 for (var j=-1;j<2;j++){
-                    
                     if (grid.blocked[this.x+i][this.y+j]==0 || grid.blocked[this.x+i][this.y+j]==2){
                         ctx.drawImage(this.image, this.setX(this.x+i)- grid.gridSize / 2, this.setY(this.y+j)- grid.gridSize / 2, grid.gridSize, grid.gridSize);
                     }
@@ -541,7 +471,6 @@ class WalkingEnemy extends Enemy {
             ];
             var newx =dirs[this.dir][0]+this.x
             var newy =dirs[this.dir][1]+this.y
-            console.log(newx,newy)
             if (newx>=0&&newx<GRID_WIDTH&&newy>=0&&newy<GRID_HEIGHT&&(grid.blocked[newx][newy]==0)){
                 
                 this.x=newx
@@ -576,8 +505,6 @@ class WalkingEnemy extends Enemy {
                     this.attackState=0;
                     this.image.src = "images/enemyS1.jpg";
                 }
-                //this.attackState=0;
-                //this.attackState=0;
             }
             
             this.update()
@@ -590,108 +517,3 @@ class WalkingEnemy extends Enemy {
             }
         }
     }
-//  // start and goal will be in format of (x,y)
-//  A_star(start, goal) {
-//     // things in open list will be in format f, g, h, x, y
-//     console.log("hi:",start);
-//     console.log("hi:",goal);
-//     this.curPath = []
-//     var openList   = [];
-//     var parent = {start:null}
-//     var costTo = {start:0}
-//     var x = start[0]
-//     var y = start[1]
-//     var g = 0
-//     var visited = new Array(GRID_WIDTH);
-  
-//     for (var i = 0; i < GRID_WIDTH; i++) {
-//         visited[i] = new Array(GRID_HEIGHT);
-//         visited[i].fill(0);
-//     }
-//     var h = Math.abs(goal[0]-x)+Math.abs(goal[1]-y);
-//     let dirs = [
-//         [1, 0],
-//         [0, 1],
-//         [-1, 0],
-//         [0, -1]
-//     ];
-//     openList.push([g+h,g,h,x,y]);
-//     //console.log([g+h,g,h,x,y]);
-//     var count = 1;
-//     while(openList.length > 0) {
-//         //console.log(count,"uewfoj");
-//         openList.sort(function(x,y){return x[0]-y[0]});
-        
-//         var cur = openList.shift();
-//         // console.log(cur)
-//         visited[cur[3]][cur[4]] = 1;
-//         var isGood = 0;
-//         for (var i =0;i<4;i++){
-//             x = cur[3]+dirs[i][0];
-//             y = cur[4]+dirs[i][1];
-//             if ([x,y]==[goal[0],goal[1]]){
-//                 parent[[x,y]] = [cur[3],cur[4]];
-//                 console.log([cur[3],cur[4]]);
-//                 isGood=1;
-//                 break;
-//             }
-//             if (x<0||y<0||x>=GRID_WIDTH||y>=GRID_HEIGHT){
-//                 continue;
-//             }
-//             //console.log(x,y);
-//            // console.log(grid.blocked[x][y])
-//             if (grid.blocked[x][y]!=1 && (visited[x][y]==0||cur[1]+1<costTo[[x,y]])){
-                
-               
-//                 costTo[[x,y]]=cur[1]+1;
-//                 g = cur[1]+1;
-//                 h = Math.abs(goal[0]-x)+Math.abs(goal[1]-y);
-//                 openList.push([g+h,g,h,x,y]);
-//                 parent[[x,y]] = [cur[3],cur[4]];
-                
-//             }
-//         }
-//         if (isGood==1){
-//             break;
-//         }
-       
-//     }
-//     let spot = [goal[0],goal[1]];
-//     let retPath = [];
-//     while (spot[0]!=start[0]||spot[1]!=start[1]){
-//         console.log(retPath);
-//         var par = parent[spot];
-//         retPath.unshift([spot[0]-par[0],spot[1]-par[1]]);
-//         this.curPath.unshift([spot[0]-par[0],spot[1]-par[1]]);
-//         spot = par;
-        
-//     }
-//     // No result was found -- empty array signifies failure to find path
-//     console.log(retPath);
-    
-//     return retPath;
-// }
-
-// getMoves() {
-//     let validMoves = []; // const means const reference not a const array
-//     let possibleMoves = [
-//         [1, 0],
-//         [0, 1],
-//         [-1, 0],
-//         [0, -1]
-//     ];
-//     for (const move of possibleMoves) {
-//         let isValid = true;
-//         let newX = move[0] + this.x;
-//         let newY = move[1] + this.y;
-//         if (newX < 0 || newX >= GRID_WIDTH) {isValid = false;}
-//         if (newY < 0 || newY >= GRID_HEIGHT) {isValid = false;}
-//         if (isValid) {validMoves.push([newX, newY])}
-//     }
-//     return validMoves;
-// }
-
-// // Gets path to nearest goal node for 3 turns.
-// getPath(turns) {
-    
-// }

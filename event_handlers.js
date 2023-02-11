@@ -226,46 +226,34 @@ function onStart() {
 }
 
 function createEnemy(x,y,type){
-    console.log(type);
     if (type==-1){
         for (var i=0;i<GRID_WIDTH;i++){
             for (var j=0;j<GRID_HEIGHT;j++){
                 if (j==0||i==0||j==GRID_HEIGHT-1||i==GRID_WIDTH-1){
-                    console.log('hi');
-                    wall = new Voyd(i,j);
-                    console.log('hi');
-                    enemyList.addActor(wall)
+                    voyd = new Voyd(i,j);
+                    enemyList.addActor(voyd)
                 }
             }
         }
     }
     if (type==0){
-        console.log(type,x,y);
         wall = new Wall(x,y);
         grid.blocked[x][y]=1;
 
         enemyList.addActor(wall)
     }
     if (type==0.5){
-        console.log(type,x,y);
         wall = new WalkingWall(x,y);
         enemyList.addActor(wall)
     }
     if (type==1){
-        console.log(type,x,y);
         goal = new Goal(x,y);
         enemyList.addActor(goal)
     }
     if (type>=2 && type<3){
-        
-        console.log(type,x,y);
         chicken = new WalkingEnemy(x,y,Math.round((type-2)*10));
-       
         enemyList.addActor(chicken)
-        
-    
     }
-    console.log(type)
     if (type>=3 && type<4) {
         //laser = new LaserWall(x,y);
         laser = new LaserWall(x,y,Math.round((type-3)*10));
@@ -290,7 +278,6 @@ function loadRoom(room) {
             goal = new Goal(thing[0], thing[1], thing[3]);
             enemyList.addActor(goal);
         } else {
-            console.log(thing[2])
             createEnemy(thing[0], thing[1], thing[2])
         }
     }
