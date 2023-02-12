@@ -133,7 +133,7 @@ function draw() {
         }
     }
     ctx.fillStyle = "rgba(0, 0, 0, " + screeeen / 29 + ")";
-    console.log(ctx.fillStyle)
+    //console.log(ctx.fillStyle)
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     var render = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
     frame.putImageData(render, 0, 0);
