@@ -8,7 +8,10 @@ var audio = new Audio("music/1.mp3");
 audio.volume = 0.3;
 audio.muted = true;
 var songNum = 1;
-
+var isStarting = 0;
+var shiftX = 0;
+var shiftY = 0;
+var size = 0;
 // [x,y,]
 const rooms = [
     
@@ -241,6 +244,22 @@ function onStart() {
     audio.play();
     loadRoom(0);
 }
+window.addEventListener("click", function (event) {
+    //Handle click events
+    //Get position of click on canvas: event.offsetX, event.offsetY
+    if (!playing) {
+        // shiftX = Math.min((window.innerWidth - 20)/3,(window.innerHeight - 20)/3);
+         shiftY = shiftX;
+         size = Math.min((window.innerWidth - 20)/3,(window.innerHeight - 20)/3);
+        if (event.offsetX > shiftX && event.offsetX < shiftX + 3 * size / 3 && event.offsetY > shiftY && event.offsetY < shiftY + 3 * size / 3) {
+            console.log('hi');
+            
+            isStarting = 1;
+        }
+        
+        }
+       
+});
 
 function createEnemy(x,y,type){
     if (type==-1){

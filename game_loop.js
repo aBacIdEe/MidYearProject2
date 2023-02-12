@@ -15,6 +15,9 @@ const enemyList = new ActorList();
 var GRID_WIDTH = 10;
 var GRID_HEIGHT= 10;
 const backgroundColor = "#252525";
+var screeeen=0;
+playing = 0;
+var isStarting =0;
 
 let grid = new Grid(GRID_WIDTH, GRID_HEIGHT);
 let player = new Player(3, 4);
@@ -30,10 +33,13 @@ function draw() {
     ctx.fillStyle = backgroundColor;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+ 
+    
     // Re-draw all the actors!
     grid.draw();
     grid.drawBorders();
         
+    player.draw();
     player.draw();
     // Update all actors
 
@@ -43,7 +49,35 @@ function draw() {
     for (const actor of enemyList.actors) {
         actor.draw();
     }
-    player.draw();
+     if (!playing){
+          ctx.fillStyle = backgroundColor;
+    // shiftX = Math.min((window.innerWidth - 20)/3,(window.innerHeight - 20)/3);
+    // shiftY = shiftX;
+    // size = Math.min((window.innerWidth - 20)/3,(window.innerHeight - 20)/3);
+    // ctx.textAlign = "center";
+    // ctx.fillStyle = "darkgreen";
+    // ctx.font = `${size / 4}px Helvetica`;
+    // ctx.fillText('CLICK', canvas.width / 2, canvas.height / 6.5);
+    ctx.fillStyle = backgroundColor;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+       
+    ctx.fillStyle = "#32a852";
+    shiftX = Math.floor(Math.min((window.innerWidth - 20)/3,(window.innerHeight - 20)/3));
+        shiftY = Math.floor(shiftX);
+        size = Math.floor(Math.min((window.innerWidth - 20)/3,(window.innerHeight - 20)/3));
+        
+        // console.log((shiftX),(shiftY),size)
+        // shiftX = 0
+        // shiftY =0
+        // size = 100;
+    ctx.fillRect(shiftX,shiftY,size,size);
+      
+   
+    
+
+    }
+    
+   
     // Update all actors
     grid.update();
   
@@ -79,10 +113,32 @@ function draw() {
     // Text
     ctx.font = "48px serif";
     ctx.fillText("Hi There", 100, 100);
-
+  
+    
+    if (isStarting == 1) {
+        screeeen += 4;
+        if (screeeen > 30) {
+           
+            isStarting = 2;
+            
+            playing = true;
+            
+        }
+    }
+    else if (isStarting == 2) {
+        screeeen -= 4;
+        if (screeeen <= 0) {
+            screeeen = 0;
+            isStarting = 0;
+        }
+    }
+    ctx.fillStyle = "rgba(0, 0, 0, " + screeeen / 29 + ")";
+    console.log(ctx.fillStyle)
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     var render = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
     frame.putImageData(render, 0, 0);
-}
+
+    }
 
 // Functions to control (pause/continue) the game loop.
 function pauseDrawing() {
