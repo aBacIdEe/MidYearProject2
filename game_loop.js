@@ -19,7 +19,7 @@ const backgroundColor = "#252525";
 let grid = new Grid(GRID_WIDTH, GRID_HEIGHT);
 let player = new Player(3, 4);
 
-
+aboutToPlayerUpdate = -1;
 //Draw ~ 30 times a second
 let drawIntervalId = window.setInterval(draw, FRAME_LENGTH);
 
@@ -54,8 +54,25 @@ function draw() {
         actor.update();
     }
     player.update();
+    if (aboutToPlayerUpdate!=-1){
+        grid.update()
+        grid.blocked[player.x][player.y]=2;
+        for (const actor of actorList.actors) {
+            actor.update();
+
+        }
+        for (const actor of enemyList.actors) {
+        actor.update();
+        
+        }
+        for (const enemy of enemyList.actors){ enemy.playerUpdate();}
+        aboutToPlayerUpdate = -1;
+    }
+    console.log(aboutToChange);
     if (aboutToChange!=-1){
+        console.log('hi',aboutToChange);
         loadRoom(aboutToChange);
+        console.log('hi');
         aboutToChange = -1;
     }
         
