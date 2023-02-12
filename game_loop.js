@@ -68,11 +68,11 @@ function draw() {
         for (const enemy of enemyList.actors){ enemy.playerUpdate();}
         aboutToPlayerUpdate = -1;
     }
-    console.log(aboutToChange);
+    //console.log(aboutToChange);
     if (aboutToChange!=-1){
-        console.log('hi',aboutToChange);
+       // console.log('hi',aboutToChange);
         loadRoom(aboutToChange);
-        console.log('hi');
+       // console.log('hi');
         aboutToChange = -1;
     }
         

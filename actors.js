@@ -393,9 +393,9 @@ class Goal extends Actor {
                     enemy.active = 0;
                 }
             }
-            console.log('hi232')
+            //console.log('hi232')
             grid.update()
-            console.log('hi232')
+            //console.log('hi232')
         }
     }
 }
