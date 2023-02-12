@@ -201,10 +201,38 @@ const rooms = [
         [17, 8, 1, 2]
         
     ]
-
+    
 
     ], 
+    // Room 2.5 to introduce blocking lasers
+    [1, 5, 19, 11,
+        [
+            [-1,-1,-1],
 
+        [4,1,0],
+       
+
+        [14,1,0],
+      
+
+        // enemies
+
+        [9,1,3.1],
+        [1,2,0],
+        [1,3,4],
+        [1,4,0],
+
+        [17,2,0],
+        [17,3,4.2],
+        [17,4,0],
+       
+
+        [5,11,2.3],
+        //[14,10,2.1],
+
+        // goal
+        [17,5,1,3]]
+    ],
     // ROOM 3
     [1, 4, 16, 13,
         [
@@ -239,7 +267,6 @@ window.addEventListener("load", function () {
     onStart();
 });
 function onStart() {
-    
     loadRoom(0);
 }
 window.addEventListener("click", function (event) {
@@ -300,7 +327,12 @@ function createEnemy(x,y,type){
        // console.log('hi')
         enemyList.addActor(laser);
     }
-    
+    if (type>=4 && type<5){
+        console.log('hi');
+        chicken = new WalkingEnemy(x,y,Math.round((type-4)*10));
+        chicken.turnAmount = 2;
+        enemyList.addActor(chicken)
+    }
 }
 
 function loadRoom(room) {

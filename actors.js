@@ -408,6 +408,7 @@ class WalkingEnemy extends Enemy {
         this.image.src = "images/enemyS1.jpg";
         this.dir = dir;
         this.explosionStatus = 0;
+        this.turnAmount = 1;
         
     }
 
@@ -487,7 +488,9 @@ class WalkingEnemy extends Enemy {
                 if (Math.abs( player.x-this.x)<=1&&Math.abs( player.y-this.y)<=1){
                     this.attackState=1;
                 }
-                this.dir++;
+                console.log(this.dir)
+                this.dir += this.turnAmount + 100;
+                console.log(this.dir)
                 this.dir%=4;
             }
                 
