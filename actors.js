@@ -24,7 +24,7 @@ class Grid {
             } 
         }
         this.AA = new Image(); // blank
-        this.AA.src = "images/AA.jpg";
+        this.AA.src = "images/AA.png";
         // this.debug = new Image();
         // this.debug.src = "images/debug.jpg";
         this.border = new Image();
@@ -210,7 +210,7 @@ class Wall extends Actor{
         this.color = "#1451e0";
         this.r = grid.gridSize/3;
         this.image = new Image();
-        this.image.src = "images/wall.jpg";
+        this.image.src = "images/wall.png";
     }
 
     draw() {
@@ -419,6 +419,7 @@ class WalkingEnemy extends Enemy {
             for (var i=-1;i<2;i++){
                 for (var j=-1;j<2;j++){
                     if (grid.blocked[this.x+i][this.y+j]==0 || grid.blocked[this.x+i][this.y+j]==2){
+                        console.log(this.explosionStatus);
                         ctx.drawImage(this.image, this.setX(this.x+i)- grid.gridSize / 2, this.setY(this.y+j)- grid.gridSize / 2, grid.gridSize, grid.gridSize);
                     }
                 }
