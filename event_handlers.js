@@ -6,7 +6,6 @@ let curRoom = 0;
 let aboutToChange  =-1
 var audio = new Audio("music/1.mp3");
 audio.volume = 0.3;
-audio.muted = true;
 var songNum = 1;
 var isStarting = 0;
 var shiftX = 0;
@@ -240,8 +239,7 @@ window.addEventListener("load", function () {
     onStart();
 });
 function onStart() {
-    audio.muted = false;
-    audio.play();
+    
     loadRoom(0);
 }
 window.addEventListener("click", function (event) {
@@ -249,16 +247,22 @@ window.addEventListener("click", function (event) {
     //Get position of click on canvas: event.offsetX, event.offsetY
     if (!playing) {
         // shiftX = Math.min((window.innerWidth - 20)/3,(window.innerHeight - 20)/3);
-         shiftY = shiftX;
-         size = Math.min((window.innerWidth - 20)/3,(window.innerHeight - 20)/3);
+        size = Math.floor(Math.min((window.innerWidth - 20)/3,(window.innerHeight - 20)/3));
+        shiftX = Math.floor((window.innerWidth - 20)/2 - size/2);
+        shiftY = Math.floor((window.innerHeight - 20)/2 - size/2);
         if (event.offsetX > shiftX && event.offsetX < shiftX + 3 * size / 3 && event.offsetY > shiftY && event.offsetY < shiftY + 3 * size / 3) {
             console.log('hi');
             
             isStarting = 1;
         }
-        
-        }
+        audio.play();
+    }
        
+});
+
+audio.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
 });
 
 function createEnemy(x,y,type){
@@ -348,10 +352,11 @@ document.addEventListener("keydown", function (event) {
     }
     if (event.key === "/") {
         songNum += 1
-        if (songNum == 2) {
+        if (songNum == 3) {
             songNum = 1
         }
         audio.src = "music/" + songNum + ".mp3";
+        console.log(audio.src);
         audio.play();
     }
     
