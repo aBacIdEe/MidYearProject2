@@ -310,6 +310,9 @@ document.addEventListener("keydown", function (event) {
     if (event.key === "r") {
         loadRoom(curRoom);
     }
+    if (event.key === "p") {
+        player.move(0,0);
+    }
     
 });
 document.addEventListener("keyup", function (event) {
