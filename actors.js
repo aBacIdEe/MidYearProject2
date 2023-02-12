@@ -169,17 +169,8 @@ class Player extends Actor{
         this.r = grid.gridSize/3;
     }
     playerUpdate(){
-        grid.update()
-        grid.blocked[this.x][this.y]=2;
-        for (const actor of actorList.actors) {
-            actor.update();
-
-        }
-        for (const actor of enemyList.actors) {
-        actor.update();
-        
-        }
-        for (const enemy of enemyList.actors){ enemy.playerUpdate();}
+        aboutToPlayerUpdate=1;
+       
     }
 
     die(){
@@ -313,7 +304,7 @@ class LaserWall extends Wall{
 
     draw() {
         super.draw();
-        if (this.active){
+        if (this.active==1){
             this.checkDist();
         }
             let dirs = [
@@ -397,8 +388,14 @@ class Goal extends Actor {
         this.r = grid.gridSize/3;
         if (player.x == this.x && player.y == this.y) {
             aboutToChange = this.changeRoom;
-            
+            for (var enemy of enemyList.actors){
+                if (enemy instanceof LaserWall){
+                    enemy.active = 0;
+                }
+            }
+            console.log('hi232')
             grid.update()
+            console.log('hi232')
         }
     }
 }
