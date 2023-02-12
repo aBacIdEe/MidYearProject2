@@ -4,9 +4,10 @@ const downKey = "s";
 const rightKey = "d";
 let curRoom = 0;
 let aboutToChange  =-1
-var audio = new Audio("music/song.mp3");
-    audio.volume = 0.3;
-    audio.play();
+var audio = new Audio("music/1.mp3");
+audio.volume = 0.3;
+audio.muted = true;
+var songNum = 1;
 
 // [x,y,]
 const rooms = [
@@ -236,7 +237,9 @@ window.addEventListener("load", function () {
     onStart();
 });
 function onStart() {
-   loadRoom(0);
+    audio.muted = false;
+    audio.play();
+    loadRoom(0);
 }
 
 function createEnemy(x,y,type){
@@ -323,6 +326,14 @@ document.addEventListener("keydown", function (event) {
     }
     if (event.key === ",") {
         audio.volume -= 0.01;
+    }
+    if (event.key === "/") {
+        songNum += 1
+        if (songNum == 2) {
+            songNum = 1
+        }
+        audio.src = "music/" + songNum + ".mp3";
+        audio.play();
     }
     
 });
