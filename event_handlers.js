@@ -4,6 +4,9 @@ const downKey = "s";
 const rightKey = "d";
 let curRoom = 0;
 let aboutToChange  =-1
+var audio = new Audio("music/song.mp3");
+    audio.volume = 0.3;
+    audio.play();
 
 // [x,y,]
 const rooms = [
@@ -218,6 +221,7 @@ const rooms = [
         [11,8,3.3],
 
         [5,11,2.3],
+        //[14,10,2.1],
 
         // goal
         [9,6,1,0]]
@@ -313,6 +317,12 @@ document.addEventListener("keydown", function (event) {
     }
     if (event.key === "p") {
         player.move(0,0);
+    }
+    if (event.key === ".") {
+        audio.volume += 0.01;
+    }
+    if (event.key === ",") {
+        audio.volume -= 0.01;
     }
     
 });
