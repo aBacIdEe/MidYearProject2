@@ -384,7 +384,11 @@ class Goal extends Actor {
     }
 
     draw() {
-        ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
+        //ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
+        ctx.drawImage(this.image, 
+            this.actX - grid.gridSize / 2 + grid.gridSize * 0.1, 
+            this.actY - grid.gridSize / 2 + grid.gridSize * 0.1, 
+            grid.gridSize * 0.8, grid.gridSize * 0.8);
     }
 
     update() {
@@ -413,13 +417,16 @@ class WalkingEnemy extends Enemy {
     draw() {
         //ctx.fillStyle = "blue";
          
-        ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
+        //ctx.drawImage(this.image, this.actX - grid.gridSize / 2, this.actY - grid.gridSize / 2, grid.gridSize, grid.gridSize);
+        ctx.drawImage(this.image, 
+            this.actX - grid.gridSize / 2 + grid.gridSize * 0.1, 
+            this.actY - grid.gridSize / 2 + grid.gridSize * 0.1, 
+            grid.gridSize * 0.8, grid.gridSize * 0.8);
         if (this.attackState==3&&player.isDead){
             this.explode();
             for (var i=-1;i<2;i++){
                 for (var j=-1;j<2;j++){
                     if (grid.blocked[this.x+i][this.y+j]==0 || grid.blocked[this.x+i][this.y+j]==2){
-                        console.log(this.explosionStatus);
                         ctx.drawImage(this.image, this.setX(this.x+i)- grid.gridSize / 2, this.setY(this.y+j)- grid.gridSize / 2, grid.gridSize, grid.gridSize);
                     }
                 }
