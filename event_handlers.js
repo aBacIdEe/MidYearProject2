@@ -238,24 +238,25 @@ const rooms = [
         [
             [-1,-1,-1],
 
-        [4,1,0],
-        [4,11,0],
+            [4,1,0],
+            [4,11,0],
 
-        [14,1,0],
-        [14,11,0],
+            [14,1,0],
+            [14,11,0],
 
-        // enemies
+            // enemies
 
-        [7,4,3.1],
-        [11,4,3.2],
-        [7,8,3.0],
-        [11,8,3.3],
+            [7,4,3.1],
+            [11,4,3.2],
+            [7,8,3.0],
+            [11,8,3.3],
 
-        [5,11,2.3],
-        //[14,10,2.1],
+            [5,11,2.3],
+            //[14,10,2.1],
 
-        // goal
-        [9,6,1,0]]
+            // goal
+            [9,6,1,-1],
+        ]
     ]
 ]
 
@@ -300,7 +301,7 @@ function createEnemy(x,y,type){
                     voyd = new Voyd(i,j);
                     enemyList.addActor(voyd)
                 }
-            }
+            }-2
         }
     }
     if (type==0){
@@ -328,7 +329,7 @@ function createEnemy(x,y,type){
         enemyList.addActor(laser);
     }
     if (type>=4 && type<5){
-        console.log('hi');
+        //console.log('hi');
         chicken = new WalkingEnemy(x,y,Math.round((type-4)*10));
         chicken.turnAmount = 2;
         enemyList.addActor(chicken)
@@ -388,7 +389,7 @@ document.addEventListener("keydown", function (event) {
             songNum = 1
         }
         audio.src = "music/" + songNum + ".mp3";
-        console.log(audio.src);
+        //console.log(audio.src);
         audio.play();
     }
     

@@ -18,6 +18,7 @@ const backgroundColor = "#252525";
 var screeeen = 0;
 playing = 0;
 var isStarting = 0;
+var finish = 0;
 
 let grid = new Grid(GRID_WIDTH, GRID_HEIGHT);
 let player = new Player(3, 4);
@@ -98,6 +99,19 @@ function draw() {
         loadRoom(aboutToChange);
         // console.log('hi');
         aboutToChange = -1;
+    }
+
+    if (finish == 1) {
+        console.log("asdf");
+        ctx.fillStyle = backgroundColor;
+
+        ctx.fillStyle = backgroundColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#aabea4";
+        ctx.font = "48px serif";
+        ctx.textAlign = "center";
+        ctx.fillText("You now have all the diamonds!", window.innerWidth / 2, window.innerHeight / 4);
     }
 
     // Text

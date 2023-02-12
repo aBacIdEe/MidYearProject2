@@ -387,6 +387,13 @@ class Goal extends Actor {
         this.actY = this.setY(this.y);
         this.r = grid.gridSize/3;
         if (player.x == this.x && player.y == this.y) {
+            if (this.changeRoom === -1) {
+                player.x = this.x - 1; // SUPER JANKY WAY OF NOT HAVING THIS TRIGGER MORE THAN ONCE
+                finish = 1;
+                audio.src = "music/victory.mp3";
+                audio.play();
+                return;
+            }
             aboutToChange = this.changeRoom;
             for (var enemy of enemyList.actors){
                 if (enemy instanceof LaserWall){
