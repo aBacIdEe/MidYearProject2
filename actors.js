@@ -313,7 +313,12 @@ class LaserWall extends Wall{
             [-1, 0],
             [0, -1]
             ];
-        this.expImage.src = "images/anima/explo/" + this.explosionStatus + ".jpg";
+            if (isFlashing){
+                this.expImage.src = "images/anima/explo/" + this.explosionStatus + ".jpg";
+            }
+            else{
+                this.expImage.src = "images/anima/explo/" + 6 + ".jpg";
+            }
         for (let i=1;i<=this.dist;i++){
             ctx.drawImage(this.expImage, this.setX(this.x+i*dirs[this.dir][0])- grid.gridSize / 2, this.setY(this.y+i*dirs[this.dir][1])- grid.gridSize / 2, grid.gridSize, grid.gridSize);
             if (player.x == this.x+i*dirs[this.dir][0]&& player.y==this.y+i*dirs[this.dir][1]){
@@ -436,7 +441,12 @@ class WalkingEnemy extends Enemy {
                     }
                 }
             }
-            this.image.src = "images/anima/explo/" + this.explosionStatus + ".jpg";
+            if (isFlashing){
+                this.image.src = "images/anima/explo/" + this.explosionStatus + ".jpg";
+            }
+            else{
+                this.image.src = "images/anima/explo/" + 6 + ".jpg";
+            }
             
         }
         

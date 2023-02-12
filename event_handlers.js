@@ -256,7 +256,48 @@ const rooms = [
             //[14,10,2.1],
 
             // goal
-            [9,6,1,-1],
+            [9,6,1,4],
+        ]
+    ],
+    [1, 1, 17, 13,
+        [
+            [-1,-1,-1],
+
+           
+
+            // enemies
+           
+            
+            [4,4,3.2],
+            [4,4,3.3],
+            [4,8,3.3],
+            [4,8,3.1],
+            [4,8,3.2],
+            [4,8,3],
+            [8,4,3.1],
+            [8,4,3.2],
+            [8,4,3.3],
+            [8,8,3.0],
+            [8,8,3.1],
+            [12,4,3.3],
+            [12,4,3.1],
+            [12,4,3.2],
+            [12,4,3],
+            [12,8,3.0],
+            [12,8,3.1],
+
+            [6,2,4.2],
+            [2,6,4.2],
+            [10,10,4.2],
+
+            [6,6,4.3],
+            [2,10,4.3],
+            [10,6,4.3],
+            [14,10,4.3],
+            //[14,10,2.1],
+
+            // goal
+            [15,11,1,-1],
         ]
     ]
 ]
@@ -269,7 +310,7 @@ window.addEventListener("load", function () {
     onStart();
 });
 function onStart() {
-    loadRoom(0);
+    loadRoom(4);
 }
 window.addEventListener("click", function (event) {
     //Handle click events
@@ -374,6 +415,10 @@ document.addEventListener("keydown", function (event) {
     }
     if (event.key === "r") {
         loadRoom(curRoom);
+    }
+    if (event.key === "o") {
+        isFlashing = 1-isFlashing;
+    
     }
     if (event.key === "p") {
         player.move(0,0);

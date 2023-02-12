@@ -19,6 +19,7 @@ var screeeen = 0;
 playing = 0;
 var isStarting = 0;
 var finish = 0;
+var isFlashing = 0;
 
 let grid = new Grid(GRID_WIDTH, GRID_HEIGHT);
 let player = new Player(3, 4);
