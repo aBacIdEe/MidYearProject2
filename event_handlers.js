@@ -278,6 +278,7 @@ function loadRoom(room) {
     curRoom = room;
     player.x = rooms[room][0];
     player.y = rooms[room][1];
+    player.isDead = 0;
     GRID_WIDTH = rooms[room][2];
     GRID_HEIGHT = rooms[room][3];
     actorList.removeAllActors();
