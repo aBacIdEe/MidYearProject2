@@ -175,6 +175,8 @@ class Player extends Actor{
 
     die(){
         this.isDead = 1;
+        boomsound.load();
+        boomsound.play();
     }
 
     move(dx,dy){
