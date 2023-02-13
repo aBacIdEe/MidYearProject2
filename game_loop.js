@@ -20,6 +20,7 @@ playing = 0;
 var isStarting = 0;
 var finish = 0;
 var isFlashing = 0;
+var moves = 0;
 
 let grid = new Grid(GRID_WIDTH, GRID_HEIGHT);
 let player = new Player(3, 4);
@@ -44,6 +45,10 @@ function draw() {
     player.draw();
     player.draw();
     // Update all actors
+    ctx.fillStyle = "#abcdee";
+    ctx.font = "24px serif";
+    ctx.textAlign = "center";
+    ctx.fillText("Moves Made: " + moves, window.innerWidth / 2, window.innerHeight / 8);
 
     for (const actor of actorList.actors) {
         actor.draw();

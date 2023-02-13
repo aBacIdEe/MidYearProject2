@@ -403,15 +403,22 @@ document.addEventListener("keydown", function (event) {
 
     if (event.key === leftKey || event.key === "ArrowLeft") {
         player.move(-1,0); 
+        moves++;
     }
     if (event.key === rightKey || event.key === "ArrowRight") {
         player.move(1,0);
+        moves++;
+
     }
     if (event.key === upKey || event.key === "ArrowUp") {
         player.move(0,-1);
+        moves++;
+
     }
     if (event.key === downKey || event.key === "ArrowDown") {
         player.move(0,1);
+        moves++;
+
     }
     if (event.key === "r") {
         loadRoom(curRoom);
@@ -422,6 +429,8 @@ document.addEventListener("keydown", function (event) {
     }
     if (event.key === "p") {
         player.move(0,0);
+        moves++;
+
     }
     if (event.key === ".") {
         audio.volume += 0.01;
