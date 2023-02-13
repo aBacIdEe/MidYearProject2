@@ -764,7 +764,7 @@ window.addEventListener("load", function () {
     onStart();
 });
 function onStart() {
-    loadRoom(5);
+    loadRoom(0);
 }
 window.addEventListener("click", function (event) {
     //Handle click events
